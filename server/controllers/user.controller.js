@@ -3,6 +3,30 @@ const Usuario = require('../models/usuario');
 const bcryptjs = require('bcryptjs');
 
 
+
+const gruposUsuarioGet = async (req, res = response) => {
+
+    const idUser = req.usuario._id.valueOf();
+
+    if ( idUser !== req.params.id ){
+        return res.status(401).json({
+            ok: false,
+            msg: 'No tienes permisos para ver los grupos de otro usuario'
+        });
+    };
+
+    // const user = Usuario.findById(req.params.id);
+    // const { pertenece_a } = user;
+    // console.log(pertenece_a);
+
+
+    res.json({
+        idUser,
+        id: req.params.id
+    });
+};
+
+
 const usuariosGet = async (req, res = response) => {
     
     const { limit = 5, from = 0 } = req.query;
@@ -66,4 +90,4 @@ const usuariosDelete = async (req, res) => {
     });
 };
 
-module.exports = { usuariosGet, usuariosPost, usuariosPut, usuariosDelete };
+module.exports = { usuariosGet, usuariosPost, usuariosPut, usuariosDelete, gruposUsuarioGet };

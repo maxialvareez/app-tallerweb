@@ -1,4 +1,4 @@
-const { response, request } = require('express');
+const { response, request, json } = require('express');
 const { Usuario, GroupUser } = require('../models');
 
 
@@ -48,17 +48,53 @@ const userGroupPost = async (req, res = response) => {
     // Guardar en BD
     await grupo.save();
 
-    res.json({
+    res.status(201).json({
         msg: 'Grupo creado'
     })
 };
 
+const addUserGroup = async (req, res = response) => {
+
+    const idUser = req.usuario._id.valueOf();
+    const groupUser = await GroupUser.findById(req.params.id);
+    const user = await Usuario.findById(req.body.usuario);
+    const { integrantes } = groupUser;
+
+    if ( idUser !== groupUser.creado_por.valueOf()){
+        return res.status(401).json({
+            msg: "Sólo el creador del grupo puede agregar usuarios."
+        });
+    }
+
+    if (integrantes.includes(user._id)){
+        return res.status(400).json({
+            msg: "El usuario ya pertenece al grupo."
+        });
+    }
+
+    const grupo = await GroupUser.findByIdAndUpdate( req.params.id,
+        { $push: {
+            integrantes: user
+        }});
+    
+    return res.json({
+        grupo
+    })
+};
+
 const updateUserGroup = async (req, res = response) => {
+    
     const { id } = req.params;
     const { estado, creado_por, ...data } = req.body;
+    const idUser = req.usuario._id.valueOf();
+
+    if(creado_por != idUser){
+        return res.status(401).json({
+            msg: "No tienes permiso para editar el grupo, sólo el creador"
+        })    
+    }
 
     const grupo = await GroupUser.findByIdAndUpdate( id, data);
-
     res.json(grupo)
 };
 
@@ -70,4 +106,4 @@ const deleteUserGroup = async (req, res) => {
     res.json(grupoBorrado);
 };
 
-module.exports = { userGroupsGet, userGroupGet, userGroupPost, updateUserGroup, deleteUserGroup };
+module.exports = { userGroupsGet, userGroupGet, userGroupPost, updateUserGroup, deleteUserGroup, addUserGroup };

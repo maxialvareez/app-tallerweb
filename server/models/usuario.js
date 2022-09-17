@@ -27,6 +27,10 @@ const UsuarioSchema = Schema({
         type: Boolean,
         default: true
     },
+    pertenece_a: [{
+        type: Schema.Types.ObjectId,
+        ref: 'GroupUser'  
+    }],
 });
 
 UsuarioSchema.methods.toJSON = function() {
