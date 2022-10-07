@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Igrupo } from '../../interfaces/interfaces';
+import { IGrupo } from '../../interfaces/interfaces';
 
 @Component({
   selector: 'app-lista-gastos',
@@ -8,7 +8,7 @@ import { Igrupo } from '../../interfaces/interfaces';
 })
 export class ListaGastosComponent implements OnInit {
   
-  @Input() grupo!: Igrupo;
+  @Input() grupo!: IGrupo;
   
 
 

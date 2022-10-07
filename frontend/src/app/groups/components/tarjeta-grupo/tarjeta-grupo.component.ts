@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Igrupo } from '../../interfaces/interfaces';
+import { IGrupo } from '../../interfaces/interfaces';
 
 @Component({
   selector: 'app-tarjeta-grupo',
@@ -8,6 +8,6 @@ import { Igrupo } from '../../interfaces/interfaces';
 })
 export class TarjetaGrupoComponent  {
 
-  @Input() grupo!: Igrupo;
+  @Input() grupo!: IGrupo;
 
 }

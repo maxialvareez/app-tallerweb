@@ -64,6 +64,7 @@ export class AuthService {
 
   
   logout(){
+    this.userId = "";
     localStorage.clear();
   }
 

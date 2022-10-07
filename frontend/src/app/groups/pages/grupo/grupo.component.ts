@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Igrupo } from '../../interfaces/interfaces';
+import { IGrupo } from '../../interfaces/interfaces';
 import { GroupsService } from '../../services/groups.service';
 
 @Component({
@@ -10,7 +10,7 @@ import { GroupsService } from '../../services/groups.service';
 })
 export class GrupoComponent implements OnInit {
 
-  grupo !: Igrupo;
+  grupo !: IGrupo;
 
 
 

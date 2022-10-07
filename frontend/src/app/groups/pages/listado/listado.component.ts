@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Igrupo } from '../../interfaces/interfaces';
+import { IGrupo } from '../../interfaces/interfaces';
 import { GroupsService } from '../../services/groups.service';
 import { ConfirmationDialogComponent } from '../../components/confirmation-dialog/confirmation-dialog.component';
+import { AuthService } from 'src/app/auth/services/auth.service';
 
 @Component({
   selector: 'app-listado',
@@ -10,13 +11,19 @@ import { ConfirmationDialogComponent } from '../../components/confirmation-dialo
 })
 export class ListadoComponent implements OnInit {
 
-  grupos : Igrupo[] = [];
+  grupos : IGrupo[] = [];
   
-  constructor(private GroupsService:GroupsService ) { }
+  constructor(private groupsService:GroupsService, private authService: AuthService ) { }
   
 
   ngOnInit(): void {
-    this.GroupsService.getGrupos().subscribe(grupos => this.grupos = grupos)
+    this.groupsService.getGrupos().subscribe(grupos => this.grupos = grupos.grupos)
   }
 
+  esCreador(idCreador:string):Boolean{
+   if (this.authService.getUserId() == idCreador)
+      return true;
+
+    return false;
+  }
 }

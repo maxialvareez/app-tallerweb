@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { GroupsService } from '../../services/groups.service';
-import { Igrupo } from '../../interfaces/interfaces';
+import { IGrupo } from '../../interfaces/interfaces';
 import { Usuario } from '../../../auth/interfaces/interfaces';
 
 @Component({
@@ -39,10 +39,10 @@ export class AgregarComponent implements OnInit {
       return;
     }
     this.groupsService.usuario
-    let nuevoGrupo : Igrupo = {titulo: this.miFormulario.controls["nombre"].value, descripcion: this.miFormulario.controls["descripcion"].value, estado:false, creador:this.groupsService.usuarioActual };
-    this.groupsService.agregarGrupo(nuevoGrupo);
-
-    console.log(this.miFormulario.value);
+    let nuevoGrupo : IGrupo = {nombre: this.miFormulario.controls["nombre"].value, descripcion: this.miFormulario.controls["descripcion"].value };
+    this.groupsService.agregarGrupo(nuevoGrupo).subscribe((res)=> console.log(res));
+    
+   
     this.miFormulario.reset();
   }
 

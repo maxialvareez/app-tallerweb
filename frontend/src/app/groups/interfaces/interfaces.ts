@@ -1,16 +1,18 @@
-export interface Igrupo{
-    id?:number;
-    titulo: string;
-    descripcion:string;
-    gastos?: IGasto[];
-    estado: boolean;
-    creador: IUsuario;
-    usuarios? :IUsuario[];
-}
 
+export interface IGrupo {
+    _id?:         string;
+    nombre:      string;
+    descripcion: string;
+    estado?:      boolean;
+    creado_por?:  IUsuario;
+    integrantes?: IUsuario[];
+    items?:       any[];
+
+}
 
 export interface IUsuario{
     nombre: string;
+    uid?: string;
     correo?: string;
     password?: string;
     imagen?: string;
@@ -27,3 +29,12 @@ export interface IGasto{
     descripcion: string;
 
 }
+
+export interface GroupResponse {
+    total:  number;
+    grupos: IGrupo[];
+}
+
+
+
+

@@ -1,7 +1,9 @@
-import { HttpBackend, HttpClient } from '@angular/common/http';
+import { HttpBackend, HttpClient, HttpErrorResponse, HttpHandler } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Igrupo, IGasto, IUsuario } from '../interfaces/interfaces';
-import { Observable } from 'rxjs';
+import { IGrupo, IGasto, IUsuario, GroupResponse } from '../interfaces/interfaces';
+import { Observable, throwError } from 'rxjs';
+import { ThisReceiver } from '@angular/compiler';
+import { catchError } from 'rxjs/operators';
 
 
 @Injectable({
@@ -9,8 +11,7 @@ import { Observable } from 'rxjs';
 })
 export class GroupsService {
 
-  grupos : Igrupo[] = [];
-  idActual: number = 0;
+  grupos : IGrupo[] = [];
   usuario: any = localStorage.getItem('token');
   usuarioActual : IUsuario = {nombre:"Jose"};
 
@@ -18,36 +19,40 @@ export class GroupsService {
     
   }
 
-  agregarGrupo(grupo :Igrupo){
-    this.idActual++;
-    grupo.id = this.idActual;
-    this.grupos.push(grupo);
+  agregarGrupo(grupo:IGrupo):Observable<IGrupo>{
+    
+    return this.http.post<IGrupo>("/api/groupuser/", grupo)
+
   }
 
-  getGrupos(): Observable<Igrupo[]>{
-    return this.http.get<Igrupo[]>("/api/groupuser")
-  }
 
-  getGrupoPorId(id:number):Igrupo{
+  getGrupos(): Observable<GroupResponse>{
+    return this.http.get<GroupResponse>("/api/groupuser/");
+    }
+  
+
+  getGrupoPorId(id:string):IGrupo{
     for (var f=0; f<this.grupos.length; f++){
-      if (this.grupos[f].id == id)
+      if (this.grupos[f]._id == id)
           return this.grupos[f];
     }
     let usuario: IUsuario = {nombre: "Juan" };
-    let survey: Igrupo = {descripcion:"grupo de gastos 2", estado: false, titulo:"grupo 2", id: 0, creador: usuario};
-    return survey;
+    let grupo: IGrupo = {descripcion:"grupo de gastos 2", estado: false, nombre:"grupo 2", _id: "0", creado_por: usuario};
+    return grupo;
   }
 
   
   
   
-  getFormulariosPorNombre(titulo:string):Igrupo[]{
-    let grupos : Igrupo[] = [];
+  getFormulariosPorNombre(titulo:string):IGrupo[]{
+    let grupos : IGrupo[] = [];
     for (var f=0; f<this.grupos.length; f++){
-      if (this.grupos[f].titulo == titulo)
+      if (this.grupos[f].nombre == titulo)
           grupos.push(this.grupos[f]);
     }
 
     return grupos;
   }
+
+ 
 }
