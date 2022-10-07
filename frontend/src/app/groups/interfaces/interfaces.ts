@@ -7,6 +7,7 @@ export interface IGrupo {
     creado_por?:  IUsuario;
     integrantes?: IUsuario[];
     items?:       any[];
+    __v?:    number;
 
 }
 

@@ -15,6 +15,7 @@ import { ListaGastosComponent } from './components/lista-gastos/lista-gastos.com
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ConfirmationDialogComponent } from './components/confirmation-dialog/confirmation-dialog.component';
 import {MatDialogModule} from '@angular/material/dialog';
+import { ListaUsuariosComponent } from './components/lista-usuarios/lista-usuarios.component';
 
 
 
@@ -28,6 +29,7 @@ import {MatDialogModule} from '@angular/material/dialog';
     TarjetaGrupoComponent,
     ListaGastosComponent,
     ConfirmationDialogComponent,
+    ListaUsuariosComponent,
     
   ],
   imports: [

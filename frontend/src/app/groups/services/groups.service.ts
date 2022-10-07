@@ -31,16 +31,11 @@ export class GroupsService {
     }
   
 
-  getGrupoPorId(id:string):IGrupo{
-    for (var f=0; f<this.grupos.length; f++){
-      if (this.grupos[f]._id == id)
-          return this.grupos[f];
-    }
-    let usuario: IUsuario = {nombre: "Juan" };
-    let grupo: IGrupo = {descripcion:"grupo de gastos 2", estado: false, nombre:"grupo 2", _id: "0", creado_por: usuario};
-    return grupo;
+  getGrupoPorId(id:string):Observable<any>{
+    return this.http.get<any>(`/api/groupuser/${ id }`).subscribe(res => console.log(res));
+    
+    
   }
-
   
   
   

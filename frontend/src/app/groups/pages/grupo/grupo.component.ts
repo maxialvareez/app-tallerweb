@@ -11,15 +11,24 @@ import { GroupsService } from '../../services/groups.service';
 export class GrupoComponent implements OnInit {
 
   grupo !: IGrupo;
+  groupID!: string;
 
 
 
-  constructor(private activatedRoute: ActivatedRoute,
-              private groupsService: GroupsService) { }
+  constructor( private groupsService: GroupsService, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.activatedRoute.params
-    .subscribe(({id}) => this.grupo = this.groupsService.getGrupoPorId(id));
+    this.groupID = this.activatedRoute.snapshot.paramMap.get('id')!;
+    
+    this.groupsService.getGrupoPorId(this.groupID!).subscribe(res => console.log("Grupo : "+ res))
+   
+    console.log(this.grupo);
+    console.log(this.groupID);
+    
+   
+    
+    
+
   }
 
 }
