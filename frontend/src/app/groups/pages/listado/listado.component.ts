@@ -16,8 +16,7 @@ export class ListadoComponent implements OnInit {
   
 
   ngOnInit(): void {
-    this.grupos = this.GroupsService.getGrupos()
-   
+    this.GroupsService.getGrupos().subscribe(grupos => this.grupos = grupos)
   }
 
 }

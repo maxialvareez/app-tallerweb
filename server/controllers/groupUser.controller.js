@@ -1,7 +1,7 @@
 const { response, request, json } = require('express');
 const { Usuario, GroupUser } = require('../models');
 
-
+/*
 const userGroupsGet = async (req, res = response) => {
     
     const { limit = 5, from = 0 } = req.query;
@@ -22,14 +22,14 @@ const userGroupsGet = async (req, res = response) => {
         grupos
     });
 };
+*/
 
 const userGroupGet = async (req, res = response) =>{
 
-    const { id } = req.params;
-    const grupo = await GroupUser.findById(id);
+    const { pertenece_a } = req.usuario;
+    const grupo = await GroupUser.find({ _id: pertenece_a})
 
     res.json(grupo);
-
 }
 
 const userGroupPost = async (req, res = response) => {
@@ -44,9 +44,10 @@ const userGroupPost = async (req, res = response) => {
     }
 
     const grupo = new GroupUser(data);
-
     // Guardar en BD
     await grupo.save();
+
+    await Usuario.findByIdAndUpdate(req.usuario._id, {$push: { pertenece_a: grupo}});
 
     res.status(201).json({
         msg: 'Grupo creado'
@@ -101,9 +102,17 @@ const updateUserGroup = async (req, res = response) => {
 const deleteUserGroup = async (req, res) => {
     
     const { id } = req.params;
-    const grupoBorrado = await GroupUser.findByIdAndUpdate(id, {estado: false}, {new: true});
+    const grupoBorrado = await GroupUser.findById(id);
 
-    res.json(grupoBorrado);
+    if(grupoBorrado.creado_por == req.usuario._id.valueOf()){
+        await GroupUser.findByIdAndUpdate(id, {estado: false}, {new: true});
+        await Usuario.findByIdAndUpdate(req.usuario._id, {$pull: { pertenece_a: grupo}});
+        
+        res.json("Grupo eliminado");
+    } else {
+        res.status(401).json("No tenes permisos");
+    }
+    
 };
 
-module.exports = { userGroupsGet, userGroupGet, userGroupPost, updateUserGroup, deleteUserGroup, addUserGroup };
+module.exports = { userGroupGet, userGroupPost, updateUserGroup, deleteUserGroup, addUserGroup };

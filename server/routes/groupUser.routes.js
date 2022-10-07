@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const { check } = require('express-validator');
 
-const { userGroupsGet, userGroupGet, userGroupPost, updateUserGroup, deleteUserGroup, addUserGroup } = require('../controllers/groupUser.controller');
+const { userGroupGet, userGroupPost, updateUserGroup, deleteUserGroup, addUserGroup } = require('../controllers/groupUser.controller');
 const { existeGrupo, existeUsuarioPorId } = require('../helpers/db-validators');
 const { validarJWT, esAdminRole } = require('../middlewares');
 
@@ -9,14 +9,12 @@ const { validarCampos } = require('../middlewares/validar-campos');
 
 const router = Router();
 
-// Obtener todos los items - publico
-router.get('/', userGroupsGet);
+// Obtener todos los items - publico - NO TIENE QUE IR
+// router.get('/', userGroupsGet);
 
 // Obtener un item en particular
-router.get('/:id',[
-    check('id', 'No es un id de Mongo válido').isMongoId(),
-    check('id').custom( existeGrupo ),
-    validarCampos
+router.get('/',[
+    validarJWT
 ], userGroupGet);
 
 // Crear un nuevo item
