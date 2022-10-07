@@ -1,0 +1,57 @@
+
+
+<mat-sidenav-container fullscreen class="background-size" style="background-image: url('../../../../assets/images/bg-01.jpg');">
+    <mat-sidenav #sidenav mode="push">
+        <mat-toolbar color="primary">
+            <span>Menú</span>
+            <span class="spacer"></span>
+            <button mat-icon-button color
+                    (click)="sidenav.toggle()">
+                <mat-icon>menu</mat-icon>
+            </button>
+        </mat-toolbar>
+    
+        <mat-nav-list>
+            <a routerLink="./listado"
+                mat-list-item
+                (click)="sidenav.toggle()">
+                <mat-icon mat-list-icon>label</mat-icon>
+                <span>Listado de Grupos</span>
+            </a>
+
+            <a routerLink="./agregar"
+            mat-list-item
+            (click)="sidenav.toggle()">
+            <mat-icon mat-list-icon>add</mat-icon>
+            <span>Crear Grupo</span>
+            </a>
+
+            <a routerLink="./buscar"
+            mat-list-item
+            (click)="sidenav.toggle()">
+            <mat-icon mat-list-icon>search</mat-icon>
+            <span>Buscar Grupo</span>
+        </a>
+            
+        </mat-nav-list>
+    </mat-sidenav>
+
+    <mat-toolbar>
+        <button mat-icon-button
+                (click)="sidenav.toggle()">
+            <mat-icon>menu</mat-icon>
+        </button>
+        <span class="spacer"></span>
+        <button mat-button
+                (click)="logout()">
+            Logout
+        </button>
+    </mat-toolbar>
+
+    <div class="container">
+        <router-outlet></router-outlet>
+        
+    </div>
+    
+    
+</mat-sidenav-container>

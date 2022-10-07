@@ -1,0 +1,30 @@
+<h1>{{grupo.titulo}}</h1>
+<br>
+<div fxLayout= "column wrap"
+    fxLayoutAlign="center"
+    fxLayoutGap="20px">
+    <mat-card >
+        <mat-card-header>
+            <mat-card-title>
+                {{grupo.titulo}}
+            </mat-card-title>
+            <mat-card-subtitle>
+                {{grupo.descripcion}}
+            </mat-card-subtitle>
+
+          
+        </mat-card-header>
+        <mat-list>
+            <app-lista-gastos [grupo] = "grupo"></app-lista-gastos>
+        </mat-list>    
+    </mat-card>
+    <div class="mb-3 row">
+        <div class="col-sm-9">
+            <button class="btn btn-primary "
+                    routerLink="./listado">
+                Regresar
+            </button>
+        </div>
+    </div>
+
+</div>

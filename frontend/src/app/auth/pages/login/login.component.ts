@@ -27,7 +27,7 @@ export class LoginComponent {
     
     this.authService.login( correo, password ).subscribe( resp => {
       if( resp == true ){
-        this.router.navigateByUrl('/dashboard');
+        this.router.navigateByUrl('/groups');
       } else {
         Swal.fire('Error', resp, 'error');
       }
