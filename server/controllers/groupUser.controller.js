@@ -22,6 +22,23 @@ const userGroupGet = async (req, res = response) =>{
     });
 }
 
+const userGroupByIdGet = async (req, res = response) =>{
+
+    const { id } = req.params;
+    const group = await GroupUser.findById(id);
+   
+    if(group.integrantes.includes(req.usuario._id)){
+        return res.json(group);
+    }
+
+    return res.status(401).json({
+        msg: "No tienes permisos para ver este grupo"
+    });
+
+    // Ver si hay que popular
+
+}
+
 const userGroupPost = async (req, res = response) => {
 
     const { nombre, descripcion } = req.body;
@@ -34,7 +51,6 @@ const userGroupPost = async (req, res = response) => {
     }
 
     const grupo = new GroupUser(data);
-    // Guardar en BD
     await grupo.save();
 
     await Usuario.findByIdAndUpdate(req.usuario._id, {$push: { pertenece_a: grupo}});
@@ -105,4 +121,4 @@ const deleteUserGroup = async (req, res) => {
     
 };
 
-module.exports = { userGroupGet, userGroupPost, updateUserGroup, deleteUserGroup, addUserGroup };
+module.exports = { userGroupByIdGet, userGroupGet, userGroupPost, updateUserGroup, deleteUserGroup, addUserGroup };
