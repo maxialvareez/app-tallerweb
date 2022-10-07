@@ -31,8 +31,8 @@ export class GroupsService {
     }
   
 
-  getGrupoPorId(id:string):Observable<any>{
-    return this.http.get<any>(`/api/groupuser/${ id }`).subscribe(res => console.log(res));
+  getGrupoPorId(id:string):Observable<IGrupo>{
+    return this.http.get<IGrupo>(`/api/groupuser/${ id }`);
     
     
   }
