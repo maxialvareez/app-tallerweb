@@ -1,7 +1,8 @@
 const { Router } = require('express');
 const { check } = require('express-validator');
 
-const { userGroupsGet, userGroupGet, userGroupPost, updateUserGroup, deleteUserGroup } = require('../controllers/groupUser.controller');
+const { userGroupsGet, userGroupGet, userGroupPost, updateUserGroup, deleteUserGroup, addUserGroup } = require('../controllers/groupUser.controller');
+const { existeGrupo, existeUsuarioPorId } = require('../helpers/db-validators');
 const { validarJWT, esAdminRole } = require('../middlewares');
 
 const { validarCampos } = require('../middlewares/validar-campos');
@@ -14,7 +15,7 @@ router.get('/', userGroupsGet);
 // Obtener un item en particular
 router.get('/:id',[
     check('id', 'No es un id de Mongo válido').isMongoId(),
-    //check('id').custom( existeItem ), Hacer existe grupo
+    check('id').custom( existeGrupo ),
     validarCampos
 ], userGroupGet);
 
@@ -23,11 +24,20 @@ router.post('/',[
     validarJWT
 ], userGroupPost);
 
+router.put('/:id/user',[
+    validarJWT,
+    check('id', 'No es un id de Mongo válido').isMongoId(),
+    check('usuario', 'No es un id de Mongo válido').isMongoId(),
+    check('usuario').custom(existeUsuarioPorId),
+    check('id').custom( existeGrupo ),
+    validarCampos
+], addUserGroup);
+
 // Actualizar un item
 router.put('/:id',[
     validarJWT,
     check('nombre', 'El nombre es obligatorio').not().isEmpty(),
-    //check('id').custom( existeItem ), Hacer existe grupo
+    check('id').custom( existeGrupo ),
     validarCampos
 ], updateUserGroup);
 
@@ -35,7 +45,7 @@ router.put('/:id',[
 router.delete('/:id',[
     validarJWT,
     check('id', 'No es un id de Mongo válido').isMongoId(),
-    //check('id').custom( existeItem ), Hacer existe grupo
+    check('id').custom( existeGrupo),
     validarCampos
 ], deleteUserGroup);
 

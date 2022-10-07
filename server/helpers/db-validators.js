@@ -1,4 +1,4 @@
-const { Usuario, Item, Role } = require('../models');
+const { Usuario, Item, Role, GroupUser } = require('../models');
 
 const esRoleValido = async(rol = '') => {
     const existeRol = await Role.findOne({ rol });
@@ -28,9 +28,17 @@ const existeItem = async ( id ) => {
     }
 }
 
+const existeGrupo = async ( id ) => {
+    const existeGrupo = await GroupUser.findById(id);
+    if ( !existeGrupo ){
+        throw new Error(`El Item ID: ${ id } no existe`);
+    }
+}
+
 module.exports = {
     esRoleValido,
     emailExiste,
     existeUsuarioPorId,
-    existeItem
+    existeItem,
+    existeGrupo
 }

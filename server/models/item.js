@@ -21,12 +21,7 @@ const ItemSchema = Schema({
         type: Schema.Types.ObjectId,
         ref: 'Usuario',
         required: true
-    }/*,
-    pertenece_a:{
-        type: Schema.Types.ObjectId,
-        ref: 'GroupUser',
-        required: true
-    }*/
+    }
 });
 
 ItemSchema.methods.toJSON = function() {
