@@ -1,18 +1,17 @@
 const { response, request, json } = require('express');
 const { Usuario, GroupUser } = require('../models');
 
-/*
-const userGroupsGet = async (req, res = response) => {
-    
+const userGroupGet = async (req, res = response) =>{
+
+    const { pertenece_a } = req.usuario;
     const { limit = 5, from = 0 } = req.query;
-    const query = { estado: true };
+    const query = { _id: pertenece_a }
 
     const [ total, grupos ] = await Promise.all([
         GroupUser.countDocuments(query),
         GroupUser.find(query)
             .populate('creado_por', 'nombre')
             .populate('integrantes', 'nombre')
-            .populate('items', 'nombre', 'costo')
             .skip(Number(from))
             .limit(Number(limit))
     ]);
@@ -21,15 +20,6 @@ const userGroupsGet = async (req, res = response) => {
         total,
         grupos
     });
-};
-*/
-
-const userGroupGet = async (req, res = response) =>{
-
-    const { pertenece_a } = req.usuario;
-    const grupo = await GroupUser.find({ _id: pertenece_a})
-
-    res.json(grupo);
 }
 
 const userGroupPost = async (req, res = response) => {

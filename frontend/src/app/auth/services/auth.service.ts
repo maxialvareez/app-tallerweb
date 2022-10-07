@@ -11,6 +11,7 @@ import { Observable, of } from 'rxjs';
 export class AuthService {
 
   private baseUrl: string = environment.baseUrl;
+  private userId: string = "";
 
   constructor(private http: HttpClient) { }
 
@@ -21,7 +22,7 @@ export class AuthService {
 
     return this.http.post<AuthResponse>(URL, body)
       .pipe(
-        map( resp => resp.ok ), // Se puede agregar el estado en el backend TODO
+        map( resp => resp.ok ),
         catchError( err => of(err.error.errors[0].msg))
       );
   }
@@ -36,9 +37,10 @@ export class AuthService {
         tap( resp => {
           if( resp.ok ){
             localStorage.setItem('token', resp.token!);
+            this.userId = resp.uid!;
           }
         }),
-        map( resp => resp.ok ), // Se puede agregar el estado en el backend TODO
+        map( resp => resp.ok ),
         catchError( err => of(err.error.msg))
         );
   }
@@ -53,6 +55,7 @@ export class AuthService {
       .pipe(
         map( resp => {
           localStorage.setItem('token', resp.token!);
+          this.userId = resp.uid!;
           return resp.ok!;
         }),
         catchError( err => of(false))
@@ -66,6 +69,10 @@ export class AuthService {
 
   getToken(){
     return localStorage.getItem('token')
+  }
+
+  getUserId(): string{
+    return this.userId;
   }
 
 }
