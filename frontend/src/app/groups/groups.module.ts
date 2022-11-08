@@ -16,8 +16,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ConfirmationDialogComponent } from './components/confirmation-dialog/confirmation-dialog.component';
 import {MatDialogModule} from '@angular/material/dialog';
 import { ListaUsuariosComponent } from './components/lista-usuarios/lista-usuarios.component';
-
-
+import { EditarComponent } from './pages/editar/editar.component';
+import { TabListsComponent } from './components/tab-lists/tab-lists.component';
+import {MatTabsModule} from '@angular/material/tabs';
+import {MatButtonModule} from '@angular/material/button';
 
 @NgModule({
   declarations: [
@@ -30,6 +32,9 @@ import { ListaUsuariosComponent } from './components/lista-usuarios/lista-usuari
     ListaGastosComponent,
     ConfirmationDialogComponent,
     ListaUsuariosComponent,
+    EditarComponent,
+    TabListsComponent,
+    
     
   ],
   imports: [
@@ -37,7 +42,9 @@ import { ListaUsuariosComponent } from './components/lista-usuarios/lista-usuari
     MaterialModule,
     GroupsRoutingModule,
     FlexLayoutModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatTabsModule,
+    MatButtonModule
   ]
 })
 export class GroupsModule { }

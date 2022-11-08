@@ -1,0 +1,36 @@
+<mat-card style="background-color: white;">
+    
+    <div mat-dialog-actions align="end">
+        <button mat-icon-button color="primary" routerLink="['/editar', grupo._id]">
+            <mat-icon>edit</mat-icon>
+          </button>
+        </div>
+    
+    
+    <mat-tab-group>
+        
+    
+        <mat-tab label="Integrantes" class="mat-tab-label">
+           
+            <mat-card-content>
+                <br>
+                <br>
+               
+              
+                    <app-lista-usuarios></app-lista-usuarios>
+
+                
+            </mat-card-content>
+        </mat-tab>
+        <!-- End Tab 1 -->
+        <!-- Tab 2 -->
+        <mat-tab label="Gastos" >
+            <mat-card-content>
+               
+                <br>
+                <br>
+                <app-lista-gastos></app-lista-gastos>
+            </mat-card-content>
+        </mat-tab>
+    </mat-tab-group>
+</mat-card>

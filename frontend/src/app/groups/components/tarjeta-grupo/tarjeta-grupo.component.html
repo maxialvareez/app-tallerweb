@@ -1,17 +1,31 @@
-<mat-card >
-    <mat-card-header>
-        <mat-card-title>
-            {{grupo.nombre}}
-        </mat-card-title>
-        <mat-card-subtitle>
-            {{grupo.descripcion}}
-        </mat-card-subtitle>
-        <mat-card-actions>
-            <button mat-button color="warn"
-                [routerLink]="['/groups', grupo._id]">
-                Ver más...
-            </button>
-           
-        </mat-card-actions>
-    </mat-card-header>
+<mat-card class="oh text-center little-profile" style="background-color: white;">
+
+    <img mat-card-image src="assets/images/moneyjpg.jpg" alt="Photo of a Shiba Inu" height="100">
+    <mat-card-content>
+        <div mat-dialog-actions align="end">
+        <button mat-icon-button color="primary" routerLink="['/editar', grupo._id]">
+            <mat-icon>edit</mat-icon>
+          </button>
+        </div>
+        <div class="pro-img">
+            <img src="assets/images/group.png" width="100" alt="user" class="img-circle">
+        </div>
+        <h1 class="fuente" style="color: black;">Angela Dominic</h1>
+        <h6 class="fuente-descripcion"style="color: black;">Web Designer &amp; Developer</h6>
+        
+        <div fxLayout="row" fxLayoutWrap="wrap" class="m-t-30" >
+            <div style="color: black;"fxFlex.gt-sm="33.33%" fxFlex.gt-xs="33.33%" fxFlex="100">
+                <h3 class="m-0 font-light">1099</h3>
+                <small>Integrantes</small>
+            </div>
+            <div style="color: black;"fxFlex.gt-sm="33.33%" fxFlex.gt-xs="33.33%" fxFlex="100">
+                <h3 class="m-0 font-light"></h3>
+                <small></small>
+            </div>
+            <div style="color: black;"fxFlex.gt-sm="33.33%" fxFlex.gt-xs="33.33%" fxFlex="100">
+                <h3 class="m-0 font-light">6035</h3>
+                <small>Cantidad de gastos</small>
+            </div>
+        </div>
+    </mat-card-content>
 </mat-card>

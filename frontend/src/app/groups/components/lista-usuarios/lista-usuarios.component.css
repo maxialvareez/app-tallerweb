@@ -17,6 +17,7 @@ body{margin-top:20px;}
 .user-list tbody td .user-subhead {
 	font-size: 0.875em;
 	font-style: italic;
+	color: #344644;
 }
 
 /* TABLES */

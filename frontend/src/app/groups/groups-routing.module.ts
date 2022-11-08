@@ -7,6 +7,7 @@ import { MenuComponent } from './pages/menu/menu.component';
 import { BuscarComponent } from './pages/buscar/buscar.component';
 import { GrupoComponent } from './pages/grupo/grupo.component';
 import { MainComponent } from '../auth/pages/main/main.component';
+import { EditarComponent } from './pages/editar/editar.component';
 
 
 const routes: Routes = [
@@ -18,7 +19,7 @@ const routes: Routes = [
       { path: 'agregar', component: AgregarComponent},
       { path: 'listado', component: ListadoComponent},
       { path: ':id', component: GrupoComponent},
-      { path: 'editar/:id', component: GrupoComponent},
+      { path: 'editar/:id', component: EditarComponent},
       { path: 'buscar', component: BuscarComponent},
       { path: '**', redirectTo: 'listado'}
     ]

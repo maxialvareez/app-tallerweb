@@ -61,7 +61,7 @@ $(document).ready(function()
                         <td>{{grupo.creado_por!.nombre}}</td>
                         <td>{{grupo._id}}</td>
                         <td>                        
-                            <a *ngIf="esCreador(grupo.creado_por!.uid!)"[routerLink]="['/editar', grupo._id]" class="edit" ><i class="material-icons"  title="Editar">&#xE254;</i></a>
+                            <a *ngIf="esCreador(grupo.creado_por!.uid!)"[routerLink]="['/groups/editar', grupo._id]" class="edit" ><i class="material-icons"  title="Editar">&#xE254;</i></a>
                             <a *ngIf="esCreador(grupo.creado_por!.uid!)"[routerLink]="['/editar', grupo._id]" class="delete"><i class="material-icons"  title="Eliminar">&#xE872;</i></a>
                             <a [routerLink]="['/groups', grupo._id]"class="search"> <i class="material-icons" title="Ver">search </i></a>
                             

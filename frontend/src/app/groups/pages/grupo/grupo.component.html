@@ -1,27 +1,18 @@
+<div fxLayout="row wrap">
+  
+  <div fxFlex.gt-lg="25" fxFlex.gt-md="40" fxFlex.gt-xs="100" fxFlex="100" class="separador" >
+    <app-tarjeta-grupo></app-tarjeta-grupo>
+  </div>
 
-<div fxLayout= "column wrap"
-    fxLayoutAlign="center"
-    fxLayoutGap="20px">
-    <mat-card >
-        <mat-card-header>
-            <mat-card-title>
-                {{grupo.nombre}}
-            </mat-card-title>
-            <mat-card-subtitle>
-                {{grupo.descripcion}}
-            </mat-card-subtitle>
-
-         
-        </mat-card-header>
-        <app-lista-usuarios></app-lista-usuarios>
-    </mat-card>
-    <div class="mb-3 row">
-        <div class="col-sm-9">
-            <button class="btn btn-primary "
-                    routerLink="./listado">
-                Regresar
-            </button>
-        </div>
-    </div>
-
+  <div fxFlex.gt-lg="50" fxFlex.gt-md="50" fxFlex.gt-xs="100" fxFlex="100" class="separador" >
+    <app-tab-lists [grupo] = "grupo"></app-tab-lists>
+  </div>
+  
+  <div fxFlex.gt-lg="60" fxFlex.gt-md="50" fxFlex.gt-xs="100" fxFlex="100" class="separador" >
+    <br>
+    <a mat-raised-button routerLink="/groups/listado">Volver</a>
+    
+  </div>
+  
 </div>
+

@@ -1,0 +1,50 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<h2>Editar Información de grupo</h2>
+<hr>
+<input routerLink="/groups/listado" type="button" class="btn btn-info float-end"  value="Volver" >
+<br>
+<br>
+<div>
+    <h3>Cambiar Nombre o Descripción</h3>
+    <div>
+     <div>
+        <form (ngSubmit)="guardar()" autocomplete="off" [formGroup]="miFormulario ">
+            <div>      
+            </div>
+            <div >     
+                <div class="form-group">
+                    <label>Nombre</label>
+                    <input type="text"
+                                class="form-control"
+                                formControlName="nombre">
+                    <span class="form-text text-danger"
+                            *ngIf="campoEsValido('nombre')">
+                            Debe de ser de 3 letras
+                    </span>
+                </div>
+
+                <div class="form-group">
+                    <label>Descripción</label>
+                    <input type="text"
+                         class="form-control"
+                            formControlName="descripcion">
+                    <span class="form-text text-danger"
+                            *ngIf="campoEsValido('descripcion')">
+                            Debe de ser de 5 letras
+                    </span>
+                </div>
+            </div>
+        
+            <div>
+                <input type="submit" class="btn btn-success" value="Guardar Cambios" >
+            </div>
+        </form>
+     </div>
+    </div>
+   </div>
+
+
+
+
+

@@ -49,5 +49,27 @@ export class GroupsService {
     return grupos;
   }
 
+
+
+  //hacer
+ getGastos(groupId:string):Observable<IGasto>{
+  return this.http.get<IGasto>("/api/groupuser/");
+ }
+
+ agregarGasto(gasto:IGasto):Observable<IGasto>{
  
+ return this.http.post<IGasto>("/api/groupuser/", gasto)
+}
+
+getUsuarios(groupId:string):Observable<IUsuario>{
+  return this.http.get<IUsuario>("/api/groupuser/");
+}
+
+agregarUsuario(groupId:string, correo:string):Observable<IUsuario>{
+  return this.http.post<IUsuario>("/api/groupuser/", groupId + correo);
+}
+
+
+
+
 }
