@@ -90,10 +90,11 @@ const addUserGroup = async (req, res = response) => {
 const updateUserGroup = async (req, res = response) => {
     
     const { id } = req.params;
+    const group = await GroupUser.findById(id);
     const { estado, creado_por, ...data } = req.body;
     const idUser = req.usuario._id.valueOf();
 
-    if(creado_por != idUser){
+    if(group.creado_por.valueOf() !== idUser){
         return res.status(401).json({
             msg: "No tienes permiso para editar el grupo, sólo el creador"
         })    
