@@ -62,12 +62,14 @@ const userGroupPost = async (req, res = response) => {
 
 const addUserGroup = async (req, res = response) => {
 
-    const idUser = req.usuario._id.valueOf();
-    const groupUser = await GroupUser.findById(req.params.id);
-    const user = await Usuario.findById(req.body.usuario);
+    const correo = req.params.correo;
+    const user = await Usuario.findOne({correo});
+    const idUserGrupo = req.usuario._id.valueOf();
+    const groupUser = await GroupUser.findById(req.body.grupo);
+    
     const { integrantes } = groupUser;
 
-    if ( idUser !== groupUser.creado_por.valueOf()){
+    if ( idUserGrupo !== groupUser.creado_por.valueOf()){
         return res.status(401).json({
             msg: "Sólo el creador del grupo puede agregar usuarios."
         });
@@ -79,7 +81,7 @@ const addUserGroup = async (req, res = response) => {
         });
     }
 
-    const grupo = await GroupUser.findByIdAndUpdate( req.params.id,
+    const grupo = await GroupUser.findByIdAndUpdate( groupUser,
         { $push: {
             integrantes: user
         }});

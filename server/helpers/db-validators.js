@@ -21,6 +21,13 @@ const existeUsuarioPorId = async( id ) => {
     }
 };
 
+const existeUsuarioPorCorreo = async( correo ) => {
+    const existeUsuario = await Usuario.findOne({ correo });
+    if ( !existeUsuario ){
+        throw new Error(`El correo: ${ correo } no está registrado`);
+    }
+};
+
 const existeItem = async ( id ) => {
     const existeItem = await Item.findById(id);
     if ( !existeItem ){
@@ -40,5 +47,6 @@ module.exports = {
     emailExiste,
     existeUsuarioPorId,
     existeItem,
-    existeGrupo
+    existeGrupo,
+    existeUsuarioPorCorreo
 }

@@ -2,7 +2,7 @@ const { Router } = require('express');
 const { check } = require('express-validator');
 
 const { userGroupByIdGet, userGroupGet, userGroupPost, updateUserGroup, deleteUserGroup, addUserGroup } = require('../controllers/groupUser.controller');
-const { existeGrupo, existeUsuarioPorId } = require('../helpers/db-validators');
+const { existeGrupo, existeUsuarioPorId, existeUsuarioPorCorreo } = require('../helpers/db-validators');
 const { validarJWT, esAdminRole } = require('../middlewares');
 
 const { validarCampos } = require('../middlewares/validar-campos');
@@ -30,12 +30,10 @@ router.post('/',[
 ], userGroupPost);
 
 // Agregar usuario a grupo
-router.put('/:id/user',[
+router.put('/user/:correo',[
     validarJWT,
-    check('id', 'No es un id de Mongo válido').isMongoId(),
-    check('usuario', 'No es un id de Mongo válido').isMongoId(),
-    check('usuario').custom(existeUsuarioPorId),
-    check('id').custom( existeGrupo ),
+    check('correo').custom(existeUsuarioPorCorreo),
+    check('grupo').custom(existeGrupo),
     validarCampos
 ], addUserGroup);
 
