@@ -4,20 +4,13 @@ const { Usuario, GroupUser } = require('../models');
 const userGroupGet = async (req, res = response) =>{
 
     const { pertenece_a } = req.usuario;
-    const { limit = 5, from = 0 } = req.query;
     const query = { _id: pertenece_a }
 
-    const [ total, grupos ] = await Promise.all([
-        GroupUser.countDocuments(query),
-        GroupUser.find(query)
+    const grupos = await GroupUser.find(query)
             .populate('creado_por', 'nombre')
-            .populate('integrantes', 'nombre')
-            .skip(Number(from))
-            .limit(Number(limit))
-    ]);
+            .populate('integrantes', 'nombre');
 
     res.json({
-        total,
         grupos
     });
 }
