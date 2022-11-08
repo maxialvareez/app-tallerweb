@@ -25,7 +25,6 @@ router.get('/:id',[
 // Crear un nuevo grupo
 router.post('/',[
     validarJWT,
-    existeUsuarioPorId,
     validarCampos
 ], userGroupPost);
 
