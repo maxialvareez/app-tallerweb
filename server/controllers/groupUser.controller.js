@@ -109,9 +109,9 @@ const deleteUserGroup = async (req, res) => {
     const { id } = req.params;
     const grupoBorrado = await GroupUser.findById(id);
 
-    if(grupoBorrado.creado_por == req.usuario._id.valueOf()){
+    if(grupoBorrado.creado_por.valueOf() == req.usuario._id.valueOf()){
         await GroupUser.findByIdAndUpdate(id, {estado: false}, {new: true});
-        await Usuario.findByIdAndUpdate(req.usuario._id, {$pull: { pertenece_a: grupo}});
+        await Usuario.findByIdAndUpdate(req.usuario._id, {$pull: { pertenece_a: id}});
         
         res.json("Grupo eliminado");
     } else {
