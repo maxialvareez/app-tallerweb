@@ -12,6 +12,11 @@ const ItemSchema = Schema({
         type: Number,
         required: [true, 'El costo es obligatorio']
     },
+    pago: {
+        type: Boolean,
+        default: false,
+        required: true
+    },
     estado: {
         type: Boolean,
         default: true,

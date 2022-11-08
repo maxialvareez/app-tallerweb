@@ -5,12 +5,16 @@ const { addItem, getItem, getItems, updateItem, deleteItem } = require('../contr
 const { validarJWT, esAdminRole } = require('../middlewares');
 
 const { validarCampos } = require('../middlewares/validar-campos');
-const { existeItem } = require('../helpers/db-validators');
+const { existeItem, existeGrupo } = require('../helpers/db-validators');
 
 const router = Router();
 
-// Obtener todos los items - publico
-router.get('/', getItems);
+// Obtener todos los items de un grupo
+router.get('/:grupo',[
+    validarJWT,
+    check('grupo').custom(existeGrupo),
+    validarCampos
+], getItems);
 
 // Obtener un item en particular
 router.get('/:id',[
@@ -20,8 +24,10 @@ router.get('/:id',[
 ], getItem);
 
 // Crear un nuevo item
-router.post('/',[
-    validarJWT
+router.post('/:grupo',[
+    validarJWT,
+    check('grupo').custom(existeGrupo),
+    validarCampos
 ], addItem);
 
 // Actualizar un item

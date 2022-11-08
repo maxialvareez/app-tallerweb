@@ -1,5 +1,5 @@
 const { response } = require("express");
-const { Item } = require('../models');
+const { Item, GroupUser } = require('../models');
 
 
 const addItem = async (req, res = response) =>{
@@ -10,12 +10,13 @@ const addItem = async (req, res = response) =>{
         nombre, 
         costo,
         descripcion,
-        creado_por: req.usuario._id
+        creado_por: req.usuario._id,
     }
 
     const item = new Item(data);
 
     await item.save();
+    await GroupUser.findByIdAndUpdate(req.params.grupo, {$push: { items: item}});
 
     res.status(201).json(item);
     
@@ -23,22 +24,15 @@ const addItem = async (req, res = response) =>{
 
 const getItems = async (req, res = response) =>{
 
-    const { limit = 10, from = 0 } = req.query;
-    const query = { estado: true };
+    const groupUser = await GroupUser.findById(req.params.grupo);
+    const { items } = groupUser;
+    const query = { estado: true,  items};
 
-    const [ total, items ] = await Promise.all([
-        Item.countDocuments(query),
-        Item.find(query)
-            .populate('creado_por','nombre')
-            .skip(Number(from))
-            .limit(Number(limit))
-    ]);
+    const gastos = await Item.find(query).populate('creado_por','nombre');
 
     res.json({
-        total,
-        items
+        gastos
     });
-
 }
 
 const getItem = async (req, res = response) =>{
