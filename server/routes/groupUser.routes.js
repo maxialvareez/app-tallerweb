@@ -1,9 +1,9 @@
 const { Router } = require('express');
 const { check } = require('express-validator');
 
-const { userGroupByIdGet, userGroupGet, userGroupPost, updateUserGroup, deleteUserGroup, addUserGroup } = require('../controllers/groupUser.controller');
-const { existeGrupo, existeUsuarioPorId, existeUsuarioPorCorreo } = require('../helpers/db-validators');
-const { validarJWT, esAdminRole } = require('../middlewares');
+const { userGroupByIdGet, userGroupGet, userGroupPost, updateUserGroup, deleteUserGroup, addUserGroup, deleteUserFromGroup} = require('../controllers/groupUser.controller');
+const { existeGrupo, existeUsuarioPorCorreo } = require('../helpers/db-validators');
+const { validarJWT } = require('../middlewares');
 
 const { validarCampos } = require('../middlewares/validar-campos');
 
@@ -36,7 +36,7 @@ router.put('/user/:correo',[
     validarCampos
 ], addUserGroup);
 
-// Actualizar un item
+// Actualizar un usuario
 router.put('/:id',[
     validarJWT,
     check('nombre', 'El nombre es obligatorio').not().isEmpty(),
@@ -44,12 +44,20 @@ router.put('/:id',[
     validarCampos
 ], updateUserGroup);
 
-// Borrar un item
+// Borrar un grupo
 router.delete('/:id',[
     validarJWT,
     check('id', 'No es un id de Mongo válido').isMongoId(),
     check('id').custom( existeGrupo),
     validarCampos
 ], deleteUserGroup);
+
+// Borrar un usuario del grupo
+router.delete('/:grupoId/:id',[
+    validarJWT,
+    check('id', 'No es un id de Mongo válido').isMongoId(),
+    check('grupoId').custom( existeGrupo),
+    validarCampos
+], deleteUserFromGroup);
 
 module.exports = router;

@@ -118,4 +118,20 @@ const deleteUserGroup = async (req, res) => {
     
 };
 
-module.exports = { userGroupByIdGet, userGroupGet, userGroupPost, updateUserGroup, deleteUserGroup, addUserGroup };
+const deleteUserFromGroup = async (req, res) => {
+    
+    const { id, grupoId } = req.params;
+    const userBorrado = await Usuario.findById(id);
+    const group = await GroupUser.findById(grupoId);
+
+    if(group.creado_por.valueOf() == req.usuario._id.valueOf()){
+        await GroupUser.findByIdAndUpdate(group, {$pull: { integrantes: id}});
+        await Usuario.findByIdAndUpdate(userBorrado, {$pull: { pertenece_a: grupoId}});
+        
+        res.json("Integrante eliminado del grupo");
+    } else {
+        res.status(401).json("No tenes permisos");
+    }
+};
+
+module.exports = { userGroupByIdGet, userGroupGet, userGroupPost, updateUserGroup, deleteUserGroup, addUserGroup, deleteUserFromGroup};
