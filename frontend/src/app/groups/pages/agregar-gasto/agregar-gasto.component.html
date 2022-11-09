@@ -1,16 +1,19 @@
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
-<h2>Editar Información de grupo</h2>
+<h2>Crear Gasto</h2>
 <hr>
-<input (click)="goBack()" type="button" class="btn btn-info float-end"  value="Volver" >
-<br>
-<br>
+
 <div>
-    <h3>Cambiar Nombre o Descripción</h3>
     <div>
      <div>
         <form (ngSubmit)="guardar()" autocomplete="off" [formGroup]="miFormulario ">
             <div>      
+                <input (click)="goBack()" type="button" class="btn btn-info float-end"  value="Volver" >
+                <br>
+                <br>
             </div>
             <div >     
                 <div class="form-group">
@@ -18,8 +21,7 @@
                     <input type="text"
                                 class="form-control"
                                 formControlName="nombre"
-                                [placeholder]="grupo.nombre">
-                                
+                                placeholder="Nombre del grupo">
                     <span class="form-text text-danger"
                             *ngIf="campoEsValido('nombre')">
                             Debe de ser de 3 letras
@@ -30,8 +32,8 @@
                     <label>Descripción</label>
                     <input type="text"
                          class="form-control"
-                            formControlName="descripcion"                    
-                            [placeholder]="grupo.descripcion">
+                            formControlName="descripcion"
+                            placeholder="Ingresa una descripción para el grupo">
                     <span class="form-text text-danger"
                             *ngIf="campoEsValido('descripcion')">
                             Debe de ser de 5 letras
@@ -39,14 +41,14 @@
                 </div>
             </div>
         
-            <div>
-                <input type="submit" class="btn btn-success" value="Guardar Cambios" >
+            <div >
+                <input type="button" class="btn btn-default float-end"  value="Limpiar" (click)="resetear()">
+                <input type="submit" class="btn btn-success separador" value="Agregar" >
             </div>
         </form>
      </div>
     </div>
    </div>
-
 
 
 

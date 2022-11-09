@@ -26,4 +26,9 @@ export class ListadoComponent implements OnInit {
 
     return false;
   }
+
+  eliminarGrupo(groupId:string){
+    this.groupsService.eliminarGrupo(groupId);
+
+  }
 }

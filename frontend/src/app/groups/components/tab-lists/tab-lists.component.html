@@ -1,7 +1,7 @@
 <mat-card style="background-color: white;">
     
     <div mat-dialog-actions align="end">
-        <button mat-icon-button color="primary" routerLink="['/editar', grupo._id]">
+        <button mat-icon-button color="primary" (click)="toEditMode()" id="botonEditar" *ngIf="esCreador()">
             <mat-icon>edit</mat-icon>
           </button>
         </div>
@@ -14,10 +14,9 @@
            
             <mat-card-content>
                 <br>
-                <br>
-               
-              
-                    <app-lista-usuarios></app-lista-usuarios>
+
+                <br>           
+                    <app-lista-usuarios [grupo] = "grupo"  [modoEdicion] = "modoEdicion"></app-lista-usuarios>
 
                 
             </mat-card-content>
@@ -29,7 +28,7 @@
                
                 <br>
                 <br>
-                <app-lista-gastos></app-lista-gastos>
+                <app-lista-gastos [grupo] = "grupo" [modoEdicion] = "modoEdicion"></app-lista-gastos>
             </mat-card-content>
         </mat-tab>
     </mat-tab-group>

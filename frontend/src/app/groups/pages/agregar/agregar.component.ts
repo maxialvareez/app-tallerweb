@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { GroupsService } from '../../services/groups.service';
 import { IGrupo } from '../../interfaces/interfaces';
 import { Usuario } from '../../../auth/interfaces/interfaces';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-agregar',
@@ -16,7 +17,7 @@ export class AgregarComponent implements OnInit {
     descripcion: [ , [ Validators.required, Validators.min(10)] ],
   })
 
-  constructor( private fb: FormBuilder, private groupsService:GroupsService ) { }
+  constructor( private fb: FormBuilder, private groupsService:GroupsService, public router: Router ) { }
 
   ngOnInit() {
     this.miFormulario.reset({
@@ -44,6 +45,8 @@ export class AgregarComponent implements OnInit {
     
    
     this.miFormulario.reset();
+    
+    this.router.navigate(['/groups/listado']);
   }
 
   resetear(){

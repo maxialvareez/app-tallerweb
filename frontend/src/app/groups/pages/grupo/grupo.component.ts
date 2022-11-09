@@ -21,6 +21,8 @@ export class GrupoComponent implements OnInit {
     this.groupID = this.activatedRoute.snapshot.paramMap.get('id')!
     
     this.groupsService.getGrupoPorId(this.groupID!).subscribe(grupo => this.grupo =  grupo);
+    console.log("group id: " +this.groupID);
+    console.log("group name: " +this.grupo.nombre);
   }
 
 }

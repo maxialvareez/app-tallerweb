@@ -1,47 +1,57 @@
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 <div class="container">
 <div class="row">
+	
+	<div mat-dialog-actions align="start">
+        <button mat-icon-button style="color: green;" [routerLink]="['/groups/agregargasto', grupo._id]">
+            <mat-icon>add</mat-icon>
+          </button>
+        </div>
+	
 	<div class="col-lg-12">
 		<div class="main-box clearfix">
 			<div class="table-responsive">
 				<table class="table user-list">
 					
 						<tr>
-							<th><span style="color: black;">Usuario</span></th>			
-							<th class="text-center"><span style="color: black;">Monto</span></th>
-							<th><span style="color: black;">Estado</span></th>
-							<th><span style="color: black;">Descripción</span></th>
+							<th class="separador"><span style="color: black;">Nombre Gasto</span></th>
+							<th class="separador"><span style="color: black;">Usuario</span></th>			
+							<th class="separador"><span style="color: black;">Monto</span></th>
+							<th class="separador"><span style="color: black;">Pago</span></th>
+							<th class="separador"><span style="color: black;">Descripción</span></th>
 							<th>&nbsp;</th>
 						</tr>
 					
 					<tbody>
-						<tr>
-							<td>
+						<tr *ngFor="let gasto of gastos">
+
+							<td >
 								<img src="assets/images/dolar.png" alt="">
-								<a href="#" class="user-link">Mila Kunis</a>
-								<span class="user-subhead">Admin</span>
+								<a>{{gasto.nombre}}</a>					
+							</td>
+							<td style="color:rgb(61, 52, 52);">
+								{{gasto.creado_por!.nombre}}
 							</td>
 
-							<td class="text-center">
-								<span  style="color: grey;">$2000</span>
+							<td style="color:rgb(61, 52, 52);">
+								${{gasto.costo}}
 							</td>
-							<td>
-								$200
+
+							<td style="color:rgb(61, 52, 52);">
+								{{gasto.pago}}
 							</td>
-							<td style="width: 20%;">
-								<a href="#" class="table-link">
-									<span class="fa-stack">
-										<i class="fa fa-square fa-stack-2x"></i>
-										<i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
-									</span>
-								</a>
-								<a href="#" class="table-link">
+							<td style="color:rgb(61, 52, 52);">
+								<a>{{gasto.descripcion}}</a>		
+							</td>
+							<td style="width: 20%;" *ngIf="muestraEliminar()">
+						
+								<a class="btn" type="button" (click)="marcarPago(gasto)">
 									<span class="fa-stack">
 										<i class="fa fa-square fa-stack-2x"></i>
 										<i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
 									</span>
 								</a>
-								<a href="#" class="table-link danger">
+								<a class="btn-danger" type="button" (click)="eliminarGasto(gasto._id!)" style="color: rgb(207, 72, 72);">
 									<span class="fa-stack">
 										<i class="fa fa-square fa-stack-2x"></i>
 										<i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
@@ -50,77 +60,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td>
-								<img src="assets/images/dolar.png" alt="">
-								<a href="#" class="user-link">George Clooney</a>
-								<span class="user-subhead">Member</span>
-							</td>
-
-							<td class="text-center">
-								<span class="label label-success"style="color: grey;">Active</span>
-							</td>
-							<td>
-								<a href="#">marlon@brando.com</a>
-							</td>
-							<td style="width: 20%;">
-								<a href="#" class="table-link">
-									<span class="fa-stack">
-										<i class="fa fa-square fa-stack-2x"></i>
-										<i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
-									</span>
-								</a>
-								<a href="#" class="table-link">
-									<span class="fa-stack">
-										<i class="fa fa-square fa-stack-2x"></i>
-										<i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
-									</span>
-								</a>
-								<a href="#" class="table-link danger">
-									<span class="fa-stack">
-										<i class="fa fa-square fa-stack-2x"></i>
-										<i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
-									</span>
-								</a>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<img src="assets/images/dolar.png" alt="">
-								<a href="#" class="user-link">Ryan Gossling</a>
-								<span class="user-subhead">Registered</span>
-							</td>
-
-							<td class="text-center">
-								<span class="label label-danger"style="color: grey;">Banned</span>
-							</td>
-							<td>
-								<a href="#">jack@nicholson</a>
-							</td>
-							<td style="width: 20%;">
-								<a href="#" class="table-link">
-									<span class="fa-stack">
-										<i class="fa fa-square fa-stack-2x"></i>
-										<i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
-									</span>
-								</a>
-								<a href="#" class="table-link">
-									<span class="fa-stack">
-										<i class="fa fa-square fa-stack-2x"></i>
-										<i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
-									</span>
-								</a>
-								<a href="#" class="table-link danger">
-									<span class="fa-stack">
-										<i class="fa fa-square fa-stack-2x"></i>
-										<i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
-									</span>
-								</a>
-							</td>
-						</tr>
-					
-						
-						
-						
+							
 					</tbody>
 				</table>
 			</div>

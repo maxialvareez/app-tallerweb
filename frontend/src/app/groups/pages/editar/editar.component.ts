@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { GroupsService } from '../../services/groups.service';
 import { IGrupo } from '../../interfaces/interfaces';
 import { ActivatedRoute } from '@angular/router';
+import { Location } from "@angular/common";
 
 @Component({
   selector: 'app-editar',
@@ -17,26 +18,32 @@ export class EditarComponent implements OnInit {
 
     miFormulario: FormGroup = this.fb.group({
     nombre: [ , [ Validators.required, Validators.minLength(3) ]   ],
-    descripcion: [ , [ Validators.required, Validators.min(10)] ],
+    descripcion: [ , [ Validators.required, Validators.minLength(3)] ],
   })
 
-  constructor( private fb: FormBuilder, private groupsService:GroupsService, private activatedRoute: ActivatedRoute ) { }
+  constructor( private fb: FormBuilder, private groupsService:GroupsService, private activatedRoute: ActivatedRoute, private location: Location ) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     
-    this.groupID = this.activatedRoute.snapshot.paramMap.get('id')!
-    this.groupsService.getGrupoPorId(this.groupID!).subscribe(grupo => this.grupo =  grupo);
+    this.groupID =  await this.activatedRoute.snapshot.paramMap.get('id')!
+    await this.groupsService.getGrupoPorId(this.groupID!).subscribe(grupo => this.grupo =  grupo);
+    console.log("group id: " +this.groupID);
+    console.log("group name: " +this.grupo.nombre);
     
-    this.grupo.nombre = "";
-    this.grupo.descripcion = "";
+  
+
+    await this.resetInicial();
+    
+
    
-
+  }
+  resetInicial(){
     this.miFormulario.reset({
       nombre: this.grupo.nombre,
       descipcion: this.grupo.descripcion
     })
-  }
 
+  }
 
   campoEsValido( campo: string ) {
     
@@ -52,15 +59,18 @@ export class EditarComponent implements OnInit {
     }
     this.groupsService.usuario
     let nuevoGrupo : IGrupo = {nombre: this.miFormulario.controls["nombre"].value, descripcion: this.miFormulario.controls["descripcion"].value };
-    //this.groupsService.agregarGrupo(nuevoGrupo).subscribe((res)=> console.log(res));
-    //TODO editar turno
+    this.groupsService.editarGrupo(this.groupID,nuevoGrupo).subscribe((res)=> console.log(res));
+    
    
     this.miFormulario.reset();
+    this.goBack();
   }
 
   resetear(){
     this.miFormulario.reset();
   }
-
+  goBack(): void {
+    this.location.back();
+  }
   
 }

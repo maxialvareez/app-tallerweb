@@ -18,14 +18,12 @@ const userGroupGet = async (req, res = response) =>{
 const userGroupByIdGet = async (req, res = response) =>{
 
     const { id } = req.params;
-    const group = await GroupUser.findById(id).populate('integrantes', ['nombre', 'correo', 'estado']);
+    const group = await GroupUser.findById(id).populate('integrantes', ['nombre', 'correo', 'estado']).populate('creado_por');
     const user = await Usuario.findById(req.usuario._id);
 
     if(user.pertenece_a.includes(id)){
         return res.json(group);
     }
-    console.log(user.pertenece_a);
-    console.log(id);
 
     return res.status(401).json({
         msg: "No tienes permisos para ver este grupo"

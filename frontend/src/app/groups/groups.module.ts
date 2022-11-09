@@ -20,6 +20,9 @@ import { EditarComponent } from './pages/editar/editar.component';
 import { TabListsComponent } from './components/tab-lists/tab-lists.component';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatButtonModule} from '@angular/material/button';
+import { AgregarGastoComponent } from './pages/agregar-gasto/agregar-gasto.component';
+import { AgregarUsuarioComponent } from './pages/agregar-usuario/agregar-usuario.component';
+
 
 @NgModule({
   declarations: [
@@ -34,6 +37,9 @@ import {MatButtonModule} from '@angular/material/button';
     ListaUsuariosComponent,
     EditarComponent,
     TabListsComponent,
+    AgregarGastoComponent,
+    AgregarUsuarioComponent,
+
     
     
   ],

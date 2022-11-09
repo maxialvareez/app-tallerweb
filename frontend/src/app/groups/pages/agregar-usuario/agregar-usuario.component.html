@@ -3,7 +3,7 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
-<h2>Crear Grupo</h2>
+<h2>AGREGAR USUARIO AL GRUPO</h2>
 <hr>
 
 <div>
@@ -11,39 +11,29 @@
      <div>
         <form (ngSubmit)="guardar()" autocomplete="off" [formGroup]="miFormulario ">
             <div>      
-                <input routerLink="/groups/listado" type="button" class="btn btn-info float-end"  value="Volver" >
+                <input (click)="goBack()" type="button" class="btn btn-info float-end"  value="Volver" >
                 <br>
                 <br>
             </div>
             <div >     
                 <div class="form-group">
-                    <label>Nombre</label>
+                    <label>Email</label>
                     <input type="text"
                                 class="form-control"
                                 formControlName="nombre"
-                                placeholder="Nombre del grupo">
+                                placeholder="Email del usuario a agregar">
                     <span class="form-text text-danger"
                             *ngIf="campoEsValido('nombre')">
                             Debe de ser de 3 letras
                     </span>
                 </div>
 
-                <div class="form-group">
-                    <label>Descripción</label>
-                    <input type="text"
-                         class="form-control"
-                            formControlName="descripcion"
-                            placeholder="Ingresa una descripción para el grupo">
-                    <span class="form-text text-danger"
-                            *ngIf="campoEsValido('descripcion')">
-                            Debe de ser de 5 letras
-                    </span>
-                </div>
+                
             </div>
         
             <div >
                 <input type="button" class="btn btn-default float-end"  value="Limpiar" (click)="resetear()">
-                <input type="submit" class="btn btn-success separador" value="Agregar">
+                <input type="submit" class="btn btn-success separador" value="Agregar" >
             </div>
         </form>
      </div>

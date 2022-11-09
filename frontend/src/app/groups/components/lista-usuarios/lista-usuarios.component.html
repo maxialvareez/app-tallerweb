@@ -1,46 +1,41 @@
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 <div class="container">
 <div class="row">
+	
+	<div mat-dialog-actions align="start">
+        <button mat-icon-button style="color: green;" [routerLink]="['/groups/agregarusuario', grupo._id]">
+            <mat-icon>add</mat-icon>
+          </button>
+        </div>
+
 	<div class="col-lg-12">
 		<div class="main-box clearfix">
 			<div class="table-responsive">
 				<table class="table user-list">
 					
 						<tr>
-							<th><span style="color: black;">Usuario</span></th>			
-							<th class="text-center"><span style="color: black;">Estado</span></th>
+							<th><span style="color: black;">Usuario</span></th>						
 							<th><span style="color: black;">Email</span></th>
 							<th>&nbsp;</th>
 						</tr>
 					
 					<tbody>
+						<ng-container *ngFor="let usuario of grupo.integrantes!">
+						
 						<tr>
 							<td>
 								<img src="assets/images/usuario.png" alt="">
-								<a href="#" class="user-link">Mila Kunis</a>
-								<span class="user-subhead">Admin</span>
+								<a href="#" class="user-link">{{usuario.nombre}}</a>
+								<span class="user-subhead" >{{usuario.rol!}}</span>
 							</td>
 
-							<td class="text-center">
-								<span  style="color: grey;">Inactive</span>
-							</td>
 							<td>
-								<a>mila@kunis.com</a>
+								<a style="color: black;">{{usuario.correo!}}</a>
 							</td>
-							<td style="width: 20%;">
-								<a href="#" class="table-link">
-									<span class="fa-stack">
-										<i class="fa fa-square fa-stack-2x"></i>
-										<i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
-									</span>
-								</a>
-								<a href="#" class="table-link">
-									<span class="fa-stack">
-										<i class="fa fa-square fa-stack-2x"></i>
-										<i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
-									</span>
-								</a>
-								<a href="#" class="table-link danger">
+							<td style="width: 20%;" *ngIf="muestraEliminar(usuario.uid!)">
+								
+								
+								<a href="#" class="table-link danger separador">
 									<span class="fa-stack">
 										<i class="fa fa-square fa-stack-2x"></i>
 										<i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
@@ -48,78 +43,7 @@
 								</a>
 							</td>
 						</tr>
-						<tr>
-							<td>
-								<img src="assets/images/usuario.png" alt="">
-								<a href="#" class="user-link">George Clooney</a>
-								<span class="user-subhead">Member</span>
-							</td>
-
-							<td class="text-center">
-								<span class="label label-success"style="color: grey;">Active</span>
-							</td>
-							<td>
-								<a href="#">marlon@brando.com</a>
-							</td>
-							<td style="width: 20%;">
-								<a href="#" class="table-link">
-									<span class="fa-stack">
-										<i class="fa fa-square fa-stack-2x"></i>
-										<i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
-									</span>
-								</a>
-								<a href="#" class="table-link">
-									<span class="fa-stack">
-										<i class="fa fa-square fa-stack-2x"></i>
-										<i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
-									</span>
-								</a>
-								<a href="#" class="table-link danger">
-									<span class="fa-stack">
-										<i class="fa fa-square fa-stack-2x"></i>
-										<i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
-									</span>
-								</a>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<img src="assets/images/usuario.png" alt="">
-								<a href="#" class="user-link">Ryan Gossling</a>
-								<span class="user-subhead">Registered</span>
-							</td>
-
-							<td class="text-center">
-								<span class="label label-danger"style="color: grey;">Banned</span>
-							</td>
-							<td>
-								<a href="#">jack@nicholson</a>
-							</td>
-							<td style="width: 20%;">
-								<a href="#" class="table-link">
-									<span class="fa-stack">
-										<i class="fa fa-square fa-stack-2x"></i>
-										<i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
-									</span>
-								</a>
-								<a href="#" class="table-link">
-									<span class="fa-stack">
-										<i class="fa fa-square fa-stack-2x"></i>
-										<i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
-									</span>
-								</a>
-								<a href="#" class="table-link danger">
-									<span class="fa-stack">
-										<i class="fa fa-square fa-stack-2x"></i>
-										<i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
-									</span>
-								</a>
-							</td>
-						</tr>
-					
-						
-						
-						
+					</ng-container>
 					</tbody>
 				</table>
 			</div>

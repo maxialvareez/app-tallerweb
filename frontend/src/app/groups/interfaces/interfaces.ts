@@ -6,7 +6,7 @@ export interface IGrupo {
     estado?:      boolean;
     creado_por?:  IUsuario;
     integrantes?: IUsuario[];
-    items?:       any[];
+    items?:       IGasto[];
     __v?:    number;
 
 }
@@ -23,19 +23,23 @@ export interface IUsuario{
 
 
 export interface IGasto{
-    usuario: IUsuario;
-    cantidad: number;
+    _id?:string;
+    creado_por?: IUsuario;
+    costo: number;
     nombre: string;
     estado?:boolean;
     descripcion: string;
+    pago:boolean;
 
 }
 
 export interface GroupResponse {
-    total:  number;
     grupos: IGrupo[];
 }
 
+export interface GastosResponse {
+    gastos: IGasto[];
+}
 
 
 

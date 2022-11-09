@@ -33,7 +33,6 @@ router.post('/:grupo',[
 // Actualizar un item
 router.put('/:id',[
     validarJWT,
-    check('nombre', 'El nombre es obligatorio').not().isEmpty(),
     check('id').custom( existeItem ),
     validarCampos
 ], updateItem);
@@ -41,7 +40,6 @@ router.put('/:id',[
 // Borrar un item
 router.delete('/:id',[
     validarJWT,
-    esAdminRole,
     check('id', 'No es un id de Mongo válido').isMongoId(),
     check('id').custom( existeItem ),
     validarCampos

@@ -51,23 +51,28 @@ $(document).ready(function()
                         <th class= "text-uppercase">Descripción</th>
                         <th class= "text-uppercase">Creador</th>
                         <th class= "text-uppercase">ID</th>
-                        <th class= "text-uppercase">Acciones</th>
+                        <th class= "text-uppercase">Acciones de grupo   </th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let grupo of grupos">
-                        <td>{{grupo.nombre}}</td>
-                        <td>{{grupo.descripcion}}</td>
-                        <td>{{grupo.creado_por!.nombre}}</td>
-                        <td>{{grupo._id}}</td>
-                        <td>                        
-                            <a *ngIf="esCreador(grupo.creado_por!.uid!)"[routerLink]="['/groups/editar', grupo._id]" class="edit" ><i class="material-icons"  title="Editar">&#xE254;</i></a>
-                            <a *ngIf="esCreador(grupo.creado_por!.uid!)"[routerLink]="['/editar', grupo._id]" class="delete"><i class="material-icons"  title="Eliminar">&#xE872;</i></a>
-                            <a [routerLink]="['/groups', grupo._id]"class="search"> <i class="material-icons" title="Ver">search </i></a>
-                            
+                    <ng-container *ngFor="let grupo of grupos">
+                    
+                    <tr *ngIf="grupo.estado == true" >
+                        <td >{{grupo.nombre}}</td>
+                        <td >{{grupo.descripcion}}</td>
+                        <td >{{grupo.creado_por!.nombre}}</td>
+                        <td >{{grupo._id}}</td>
+                        <td >                        
+                            <div class="row">
+                            <a *ngIf="esCreador(grupo.creado_por!.uid!)"[routerLink]="['/groups/editar', grupo._id]" class="btn edit" ><i class="material-icons"  title="Editar">&#xE254;</i></a>
+                            <a *ngIf="esCreador(grupo.creado_por!.uid!)"(click)="eliminarGrupo(grupo._id!)" class="btn" type="button" style="color: red;"><i class="material-icons" title="Eliminar">&#xE872;</i></a>
+                            <a [routerLink]="['/groups', grupo._id]"class="btn search"> <i class="material-icons" title="Ver">search </i></a>
+                        </div>
+                       
                         </td>
                     </tr>
-                    <tr>
+                    
+                    </ng-container>        
                 </tbody>
             </table>
         </div>

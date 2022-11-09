@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Input } from '@angular/core';
+import { GroupsService } from '../../services/groups.service';
+import { IGrupo, IUsuario } from '../../interfaces/interfaces';
+import { AuthService } from 'src/app/auth/services/auth.service'
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-lista-usuarios',
@@ -7,9 +11,43 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ListaUsuariosComponent implements OnInit {
 
-  constructor() { }
+  @Input() grupo!: IGrupo;
+  @Input() modoEdicion!: boolean;
+  
+  
 
-  ngOnInit(): void {
+  constructor(private authService: AuthService) { }
+  
+
+  ngOnInit(): void { 
+    
+    console.log("Valor grupo: " + this.grupo.nombre );
+
   }
 
+  esCreador(idCreador:string):boolean{
+   
+    if (this.grupo.creado_por!.uid== idCreador){
+      console.log("TRUE");
+            return true;
+    }
+       
+   
+ 
+     return false;
+   }
+
+
+  muestraEliminar(idUsuario:string):boolean{
+    console.log("Creador de grupo: " + this.grupo.creado_por!.uid);
+    //console.log("Usuario actual: " + this.authService.getUserId());
+    
+    if (!this.modoEdicion){
+      if (this.esCreador(idUsuario)){
+        return false;
+      }
+    }
+    
+    return true;
+  }
 }

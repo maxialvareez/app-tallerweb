@@ -8,6 +8,8 @@ import { BuscarComponent } from './pages/buscar/buscar.component';
 import { GrupoComponent } from './pages/grupo/grupo.component';
 import { MainComponent } from '../auth/pages/main/main.component';
 import { EditarComponent } from './pages/editar/editar.component';
+import { AgregarGastoComponent } from './pages/agregar-gasto/agregar-gasto.component';
+import { AgregarUsuarioComponent } from './pages/agregar-usuario/agregar-usuario.component';
 
 
 const routes: Routes = [
@@ -16,6 +18,8 @@ const routes: Routes = [
     path: '',
     component: MenuComponent,
     children: [
+      { path: 'agregarusuario/:id', component: AgregarUsuarioComponent},
+      { path: 'agregargasto/:id', component: AgregarGastoComponent},
       { path: 'agregar', component: AgregarComponent},
       { path: 'listado', component: ListadoComponent},
       { path: ':id', component: GrupoComponent},

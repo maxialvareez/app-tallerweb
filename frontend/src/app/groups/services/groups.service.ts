@@ -1,6 +1,6 @@
 import { HttpBackend, HttpClient, HttpErrorResponse, HttpHandler } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { IGrupo, IGasto, IUsuario, GroupResponse } from '../interfaces/interfaces';
+import { IGrupo, IGasto, IUsuario, GroupResponse, GastosResponse } from '../interfaces/interfaces';
 import { Observable, throwError } from 'rxjs';
 import { ThisReceiver } from '@angular/compiler';
 import { catchError } from 'rxjs/operators';
@@ -33,8 +33,7 @@ export class GroupsService {
 
   getGrupoPorId(id:string):Observable<IGrupo>{
     return this.http.get<IGrupo>(`/api/groupuser/${ id }`);
-    
-    
+
   }
   
   
@@ -52,24 +51,61 @@ export class GroupsService {
 
 
   //hacer
- getGastos(groupId:string):Observable<IGasto>{
-  return this.http.get<IGasto>("/api/groupuser/");
+ getGastos(groupId:string):Observable<GastosResponse>
+ {
+  return this.http.get<GastosResponse>("/api/items/" + groupId);
  }
 
- agregarGasto(gasto:IGasto):Observable<IGasto>{
+ agregarGasto(gasto:IGasto, idGrupo:string):Observable<IGasto>
+ {
  
- return this.http.post<IGasto>("/api/groupuser/", gasto)
+ return this.http.post<IGasto>("/api/items/"+idGrupo, gasto)
 }
 
-getUsuarios(groupId:string):Observable<IUsuario>{
+getUsuarios(groupId:string):Observable<IUsuario>
+{
   return this.http.get<IUsuario>("/api/groupuser/");
 }
 
-agregarUsuario(groupId:string, correo:string):Observable<IUsuario>{
-  return this.http.post<IUsuario>("/api/groupuser/", groupId + correo);
+agregarUsuario(groupId:string, correo:string)
+{
+  let json={
+    grupo: groupId
+  }
+  console.log(groupId);
+  return this.http.put<IUsuario>("/api/groupuser/user/" + correo, json).subscribe((e)=> console.log(e ));
 }
 
+editarGrupo(groupId:string, grupo:IGrupo )
+{
+  return this.http.put<IUsuario>("/api/groupuser/"+ groupId, grupo);
+}
 
+eliminarGrupo(groupId:string){
+  console.log("Entra a eliminar: " + groupId );
+  this.http.delete("/api/groupuser/" + groupId).subscribe((e)=> console.log(e) );
+}
 
+eliminarGasto(itemId:string){
+  console.log("Entra a eliminar: " + itemId);
+  this.http.delete("/api/items/" + itemId).subscribe((e)=> console.log(e) );
+}
+
+marcarPago(item: IGasto){
+  let json;
+  if (item.pago == false){ 
+    json = {
+      pago:"true"
+    }
+}
+else{
+  json = {
+    pago:"false"
+  }
+}
+  console.log(item._id)
+  return this.http.put<IGasto>("/api/items/"+ item._id, json ).subscribe((e)=> console.log(e));
+
+}
 
 }

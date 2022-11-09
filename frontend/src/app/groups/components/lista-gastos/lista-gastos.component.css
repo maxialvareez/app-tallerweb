@@ -4,7 +4,7 @@ body{margin-top:20px;}
 /* USER LIST TABLE */
 .user-list tbody td > img {
     position: relative;
-	max-width: 50px;
+	max-width: 40px;
 	float: left;
 	margin-right: 15px;
 }
@@ -122,6 +122,7 @@ body{margin-top:20px;}
 .table-products tbody > tr:hover > td {
 	text-decoration: none;
 	background-color: #f6f6f6;
+
 }
 .table-products .name {
 	display: block;
@@ -172,4 +173,10 @@ body{margin-top:20px;}
 }
 .table-stats .table-line-plus .status-social-icon {
 	color: #a75d54;
+}
+
+
+.separador{
+    margin-left: 20px;
+
 }
