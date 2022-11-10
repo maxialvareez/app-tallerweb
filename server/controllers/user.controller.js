@@ -17,7 +17,6 @@ const gruposUsuarioGet = async (req, res = response) => {
 
     // const user = Usuario.findById(req.params.id);
     // const { pertenece_a } = user;
-    // console.log(pertenece_a);
 
 
     res.json({

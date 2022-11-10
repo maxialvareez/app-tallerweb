@@ -24,7 +24,6 @@ export class AgregarUsuarioComponent implements OnInit {
   ngOnInit() {
     
     this.groupId = this.activatedRoute.snapshot.paramMap.get('id')!
-    
     this.miFormulario.reset({
       // nombre: 'RTX 4080ti',
     
@@ -48,7 +47,6 @@ export class AgregarUsuarioComponent implements OnInit {
   
    
     this.miFormulario.reset();
-    
     this.goBack();
   }
 

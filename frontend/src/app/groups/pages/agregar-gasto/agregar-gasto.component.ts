@@ -14,7 +14,8 @@ export class AgregarGastoComponent implements OnInit {
 
   miFormulario: FormGroup = this.fb.group({
     nombre: [ , [ Validators.required, Validators.minLength(3) ]   ],
-    descripcion: [ , [ Validators.required, Validators.min(10)] ],
+    descripcion: [ , [ Validators.required, Validators.min(5)] ],
+    costo: [ , [ Validators.required, Validators.min(1)] ],
   })
 
  groupId:string = "";
@@ -44,8 +45,8 @@ export class AgregarGastoComponent implements OnInit {
       this.miFormulario.markAllAsTouched();
       return;
     }
-    this.groupsService.usuario
-    let nuevoGasto : IGasto = {nombre: this.miFormulario.controls["nombre"].value, descripcion: this.miFormulario.controls["descripcion"].value, costo:400,pago:false };
+   
+    let nuevoGasto : IGasto = {nombre: this.miFormulario.controls["nombre"].value, descripcion: this.miFormulario.controls["descripcion"].value, costo:this.miFormulario.controls["costo"].value ,pago:false };
     this.groupsService.agregarGasto(nuevoGasto, this.groupId).subscribe((res)=> console.log(res));
     
    

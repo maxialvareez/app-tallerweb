@@ -16,19 +16,18 @@ export class ListaUsuariosComponent implements OnInit {
   
   
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, private groupsService: GroupsService) { }
   
 
   ngOnInit(): void { 
     
-    console.log("Valor grupo: " + this.grupo.nombre );
+
 
   }
 
   esCreador(idCreador:string):boolean{
    
     if (this.grupo.creado_por!.uid== idCreador){
-      console.log("TRUE");
             return true;
     }
        
@@ -38,16 +37,18 @@ export class ListaUsuariosComponent implements OnInit {
    }
 
 
-  muestraEliminar(idUsuario:string):boolean{
-    console.log("Creador de grupo: " + this.grupo.creado_por!.uid);
-    //console.log("Usuario actual: " + this.authService.getUserId());
+  muestraEliminar(idUsuario:string):Boolean{
     
-    if (!this.modoEdicion){
-      if (this.esCreador(idUsuario)){
-        return false;
-      }
-    }
     
-    return true;
+    
+    return (this.modoEdicion && !this.esCreador(idUsuario!));
   }
+
+  eliminarUsuarioGrupo(userId:string){
+    this.groupsService.eliminarUsuarioGrupo(userId, this.grupo._id!)
+    window.location.reload();
+
+  }
+
+
 }

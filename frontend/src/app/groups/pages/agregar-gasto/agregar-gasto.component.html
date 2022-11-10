@@ -21,7 +21,7 @@
                     <input type="text"
                                 class="form-control"
                                 formControlName="nombre"
-                                placeholder="Nombre del grupo">
+                                placeholder="Nombre del gasto">
                     <span class="form-text text-danger"
                             *ngIf="campoEsValido('nombre')">
                             Debe de ser de 3 letras
@@ -33,10 +33,22 @@
                     <input type="text"
                          class="form-control"
                             formControlName="descripcion"
-                            placeholder="Ingresa una descripción para el grupo">
+                            placeholder="Ingresa una descripción para el gasto">
                     <span class="form-text text-danger"
                             *ngIf="campoEsValido('descripcion')">
                             Debe de ser de 5 letras
+                    </span>
+                </div>
+
+                <div class="form-group">
+                    <label>Costo</label>
+                    <input type="number"
+                         class="form-control"
+                            formControlName="costo"
+                            placeholder="Ingresa la suma del gasto">
+                    <span class="form-text text-danger"
+                            *ngIf="campoEsValido('costo')">
+                            Debe de ser de 1 numero
                     </span>
                 </div>
             </div>

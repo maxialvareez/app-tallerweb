@@ -27,8 +27,7 @@ export class EditarComponent implements OnInit {
     
     this.groupID =  await this.activatedRoute.snapshot.paramMap.get('id')!
     await this.groupsService.getGrupoPorId(this.groupID!).subscribe(grupo => this.grupo =  grupo);
-    console.log("group id: " +this.groupID);
-    console.log("group name: " +this.grupo.nombre);
+
     
   
 
@@ -57,7 +56,7 @@ export class EditarComponent implements OnInit {
       this.miFormulario.markAllAsTouched();
       return;
     }
-    this.groupsService.usuario
+    
     let nuevoGrupo : IGrupo = {nombre: this.miFormulario.controls["nombre"].value, descripcion: this.miFormulario.controls["descripcion"].value };
     this.groupsService.editarGrupo(this.groupID,nuevoGrupo).subscribe((res)=> console.log(res));
     

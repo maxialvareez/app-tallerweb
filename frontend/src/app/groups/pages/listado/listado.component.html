@@ -55,7 +55,7 @@ $(document).ready(function()
                     </tr>
                 </thead>
                 <tbody>
-                    <ng-container *ngFor="let grupo of grupos">
+                    <ng-container *ngFor="let grupo of groupsService.grupos">
                     
                     <tr *ngIf="grupo.estado == true" >
                         <td >{{grupo.nombre}}</td>

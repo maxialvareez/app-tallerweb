@@ -21,7 +21,6 @@ export class AgregarComponent implements OnInit {
 
   ngOnInit() {
     this.miFormulario.reset({
-      // nombre: 'RTX 4080ti',
     
     })
   }
@@ -39,12 +38,13 @@ export class AgregarComponent implements OnInit {
       this.miFormulario.markAllAsTouched();
       return;
     }
-    this.groupsService.usuario
+    
     let nuevoGrupo : IGrupo = {nombre: this.miFormulario.controls["nombre"].value, descripcion: this.miFormulario.controls["descripcion"].value };
     this.groupsService.agregarGrupo(nuevoGrupo).subscribe((res)=> console.log(res));
     
    
     this.miFormulario.reset();
+    
     
     this.router.navigate(['/groups/listado']);
   }

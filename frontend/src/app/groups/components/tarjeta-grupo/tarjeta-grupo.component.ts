@@ -19,6 +19,19 @@ export class TarjetaGrupoComponent  {
  
      return false;
    }
+   cantidadIntegrantes():string{
+    if (this.grupo.integrantes != null){
+      return this.grupo.integrantes.length.toString();
+    }
+    return "0";
+   }
 
+   cantidadGastos():string{
+   
+    if (this.grupo.items != null){
+      return this.grupo.items!.length.toString();
+    }
+    return "0";
+   }
 }
 

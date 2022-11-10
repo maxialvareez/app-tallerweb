@@ -12,22 +12,22 @@ import { catchError } from 'rxjs/operators';
 export class GroupsService {
 
   grupos : IGrupo[] = [];
-  usuario: any = localStorage.getItem('token');
-  usuarioActual : IUsuario = {nombre:"Jose"};
+
 
   constructor(private http: HttpClient) {
     
   }
 
   agregarGrupo(grupo:IGrupo):Observable<IGrupo>{
-    
+
     return this.http.post<IGrupo>("/api/groupuser/", grupo)
 
   }
 
 
-  getGrupos(): Observable<GroupResponse>{
-    return this.http.get<GroupResponse>("/api/groupuser/");
+  getGrupos(){
+    this.http.get<GroupResponse>("/api/groupuser/").subscribe((a) => this.grupos = a.grupos)
+
     }
   
 
@@ -73,7 +73,7 @@ agregarUsuario(groupId:string, correo:string)
     grupo: groupId
   }
   console.log(groupId);
-  return this.http.put<IUsuario>("/api/groupuser/user/" + correo, json).subscribe((e)=> console.log(e ));
+  return this.http.put<IUsuario>("/api/groupuser/user/" + correo, json).subscribe((e)=> {console.log(e ); this.getGrupos()});
 }
 
 editarGrupo(groupId:string, grupo:IGrupo )
@@ -82,12 +82,12 @@ editarGrupo(groupId:string, grupo:IGrupo )
 }
 
 eliminarGrupo(groupId:string){
-  console.log("Entra a eliminar: " + groupId );
-  this.http.delete("/api/groupuser/" + groupId).subscribe((e)=> console.log(e) );
+  
+  this.http.delete("/api/groupuser/" + groupId).subscribe((e)=> {console.log(e); this.getGrupos() });
+  
 }
 
 eliminarGasto(itemId:string){
-  console.log("Entra a eliminar: " + itemId);
   this.http.delete("/api/items/" + itemId).subscribe((e)=> console.log(e) );
 }
 
@@ -103,9 +103,13 @@ else{
     pago:"false"
   }
 }
-  console.log(item._id)
+  
   return this.http.put<IGasto>("/api/items/"+ item._id, json ).subscribe((e)=> console.log(e));
 
 }
 
+eliminarUsuarioGrupo(userId:string, groupId:string){
+  
+  this.http.delete("/api/groupuser/" + groupId +"/"+ userId).subscribe((e)=> console.log(e));
+}
 }

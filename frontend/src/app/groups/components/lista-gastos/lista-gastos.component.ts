@@ -31,18 +31,18 @@ export class ListaGastosComponent implements OnInit {
   }
 
   muestraEliminar():Boolean{
-    //console.log("Creador de grupo: " + this.grupo.creado_por!.uid!);
-    //console.log("Usuario actual: " + this.authService.getUserId());
+
     return (this.modoEdicion && this.esCreador(this.grupo.creado_por!.uid!));
   }
 
   eliminarGasto(idGasto:string){
-    console.log("EliminarGasto");
     this.groupsService.eliminarGasto(idGasto);
+    window.location.reload();
   }
 
   marcarPago(gasto:IGasto){
     this.groupsService.marcarPago(gasto)
+    window.location.reload();
   }
 }
 
