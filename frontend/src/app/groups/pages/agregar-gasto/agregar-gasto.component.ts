@@ -51,6 +51,7 @@ export class AgregarGastoComponent implements OnInit {
     
    
     this.miFormulario.reset();
+    this.groupsService.getUsuarios(this.groupId);
     this.goBack();
   }
 

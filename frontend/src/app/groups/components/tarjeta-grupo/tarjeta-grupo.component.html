@@ -3,7 +3,7 @@
     <img mat-card-image src="assets/images/moneyjpg.jpg" alt="Photo of a Shiba Inu" height="100">
     <mat-card-content>
         <div mat-dialog-actions align="end">
-        <button mat-icon-button color="primary" [routerLink]="['/groups/editar', grupo._id]" *ngIf="esCreador()">
+        <button mat-icon-button color="primary" [routerLink]="['/groups/editar', grupo._id]" *ngIf="esCreador()" title="Editar Nombre o Descripción">
             <mat-icon>edit</mat-icon>
           </button>
         </div>

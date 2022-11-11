@@ -12,7 +12,7 @@ import { catchError } from 'rxjs/operators';
 export class GroupsService {
 
   grupos : IGrupo[] = [];
-
+  
 
   constructor(private http: HttpClient) {
     
@@ -78,7 +78,7 @@ agregarUsuario(groupId:string, correo:string)
 
 editarGrupo(groupId:string, grupo:IGrupo )
 {
-  return this.http.put<IUsuario>("/api/groupuser/"+ groupId, grupo);
+  return this.http.put<IUsuario>("/api/groupuser/"+ groupId, grupo).subscribe((e)=> {console.log(e ); this.getGrupos()});
 }
 
 eliminarGrupo(groupId:string){

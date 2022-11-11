@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { GroupsService } from '../../services/groups.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IGasto } from '../../interfaces/interfaces';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from "@angular/common";
 
 @Component({
@@ -19,7 +19,7 @@ export class AgregarUsuarioComponent implements OnInit {
 
  groupId:string = "";
 
-  constructor( private fb: FormBuilder, private groupsService:GroupsService,  private activatedRoute: ActivatedRoute, private location: Location ) { }
+  constructor( private fb: FormBuilder, private groupsService:GroupsService,  private activatedRoute: ActivatedRoute, private location: Location, public router: Router ) { }
 
   ngOnInit() {
     
@@ -45,16 +45,19 @@ export class AgregarUsuarioComponent implements OnInit {
     }
     this.groupsService.agregarUsuario(this.groupId, this.miFormulario.controls["nombre"].value)
   
-   
+    
     this.miFormulario.reset();
-    this.goBack();
+    this.router.navigateByUrl('/groups/'+ this.groupId).then(() => {
+      window.location.reload();
+    });
   }
 
   resetear(){
     this.miFormulario.reset();
   }
   
-  goBack(): void {
-    this.location.back();
+  goBack() {
+    this.location.back()
+    
   }
 }

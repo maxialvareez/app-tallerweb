@@ -26,7 +26,7 @@
 							<td>
 								<img src="assets/images/usuario.png" alt="">
 								<a href="#" class="user-link">{{usuario.nombre}}</a>
-								<span class="user-subhead" >{{usuario.rol!}}</span>
+								<span style="color: black;" class="user-subhead"  *ngIf="esCreador(usuario.uid!)">Admin</span>
 							</td>
 
 							<td>

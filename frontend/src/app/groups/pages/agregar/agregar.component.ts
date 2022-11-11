@@ -45,7 +45,7 @@ export class AgregarComponent implements OnInit {
    
     this.miFormulario.reset();
     
-    
+    this.groupsService.getGrupos();
     this.router.navigate(['/groups/listado']);
   }
 

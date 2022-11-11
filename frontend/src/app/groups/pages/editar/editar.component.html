@@ -18,7 +18,8 @@
                     <input type="text"
                                 class="form-control"
                                 formControlName="nombre"
-                                [placeholder]="grupo.nombre">
+                                
+                                [value]="grupo.nombre">
                                 
                     <span class="form-text text-danger"
                             *ngIf="campoEsValido('nombre')">
@@ -31,7 +32,9 @@
                     <input type="text"
                          class="form-control"
                             formControlName="descripcion"                    
-                            [placeholder]="grupo.descripcion">
+                            
+                            [value]="grupo.descripcion">
+                            
                     <span class="form-text text-danger"
                             *ngIf="campoEsValido('descripcion')">
                             Debe de ser de 5 letras
