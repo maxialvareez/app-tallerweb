@@ -56,9 +56,11 @@ const updateItem = async (req, res = response) =>{
 
 const deleteItem = async (req, res = response) =>{
 
-    const { id } = req.params;
+    const id = req.body.id;
+    const idGrupo = req.params.grupo;
     const itemBorrado = await Item.findByIdAndUpdate(id, {estado: false}, {new: true});
-
+    const grupoActualizado = await GroupUser.findByIdAndUpdate(idGrupo, {$pull: { items: itemBorrado._id}});
+    
     res.json(itemBorrado);
 
 }

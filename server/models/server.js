@@ -10,9 +10,9 @@ class Server {
 
         this.paths = {
             authPath: '/api/auth',
-            grupoUserPath: '/api/groupuser',
+            grupoUserPath: '/api/groupusers',
             itemsPath: '/api/items',
-            usuariosPath: '/api/usuarios'
+            usuariosPath: '/api/users'
         };
 
         // Conectar a base de datos.
@@ -43,7 +43,7 @@ class Server {
 
     routes(){
         this.app.use(this.paths.authPath, require('../routes/auth.routes'));
-        this.app.use(this.paths.grupoUserPath, require('../routes/groupUser.routes'));
+        this.app.use(this.paths.grupoUserPath, require('../routes/groupUsers.routes'));
         this.app.use(this.paths.itemsPath, require('../routes/items.routes'));
         this.app.use(this.paths.usuariosPath, require('../routes/users.routes'));
     }

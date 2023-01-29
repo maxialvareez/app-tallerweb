@@ -1,8 +1,7 @@
 const { response, request } = require('express');
 const Usuario = require('../models/usuario');
 const bcryptjs = require('bcryptjs');
-
-
+const { GroupUser } = require('../models');
 
 const gruposUsuarioGet = async (req, res = response) => {
 
@@ -15,36 +14,13 @@ const gruposUsuarioGet = async (req, res = response) => {
         });
     };
 
-    // const user = Usuario.findById(req.params.id);
-    // const { pertenece_a } = user;
-
-
     res.json({
         idUser,
         id: req.params.id
     });
 };
 
-
-const usuariosGet = async (req, res = response) => {
-    
-    const { limit = 5, from = 0 } = req.query;
-    const query = { estado: true };
-
-    const [ total, usuarios ] = await Promise.all([
-        Usuario.countDocuments(query),
-        Usuario.find(query)
-            .skip(Number(from))
-            .limit(Number(limit))
-    ]);
-
-    res.json({
-        total,
-        usuarios
-    });
-};
-
-const usuariosPost = async (req, res = response) => {
+const registrarUsuario = async (req, res = response) => {
 
     const { nombre, correo, password } = req.body;
     const usuario = new Usuario({ nombre, correo, password });
@@ -58,30 +34,45 @@ const usuariosPost = async (req, res = response) => {
 
     res.status(201).json({
         ok: true,
-        msg: 'Usuario creado'
+        msg: 'Usuario creado',
+        usuario
     })
 };
 
-const usuariosPut = async (req, res = response) => {
-    const { id } = req.params;
-    const { _id, password, correo, rol, ...resto} = req.body;
+const editUsuario = async (req, res = response) => {
+    
+    const { password, nombre, ...resto} = req.body;
+    const id = req.params.id;
 
-    // Validar contra base de datos
     if ( password ) {
         const salt = bcryptjs.genSaltSync();
         resto.password = bcryptjs.hashSync(password, salt);
     }
 
-    const usuario = await Usuario.findByIdAndUpdate( id, resto);
+    if( nombre ){
+        resto.nombre = nombre;
+    }
 
-    res.json(usuario)
+    if(req.usuario._id == id){
+        const usuario = await Usuario.findByIdAndUpdate(id, resto);
+        res.json(usuario);
+    } else {
+        res.json({
+            msg: "Error, no se puede editar."
+        })
+    }
+    
 };
 
 const usuariosDelete = async (req, res) => {
     
     const { id } = req.params;
 
-    const usuario = await Usuario.findByIdAndUpdate( id, { estado: false });
+    const usuario = await Usuario.findByIdAndUpdate( id, { estado: false }).then(() => {
+        const group = GroupUser.updateMany({integrantes: { $in: [id]}}, { $pull: { 'integrantes': id } }, function(err) {
+            if (err) handleError(err);
+        });
+    });
 
     res.json({
         msg: "Usuario eliminado",
@@ -89,4 +80,4 @@ const usuariosDelete = async (req, res) => {
     });
 };
 
-module.exports = { usuariosGet, usuariosPost, usuariosPut, usuariosDelete, gruposUsuarioGet };
+module.exports = { registrarUsuario, editUsuario, usuariosDelete, gruposUsuarioGet };

@@ -1,11 +1,4 @@
-const { Usuario, Item, Role, GroupUser } = require('../models');
-
-const esRoleValido = async(rol = '') => {
-    const existeRol = await Role.findOne({ rol });
-    if ( !existeRol ){
-        throw new Error(`El rol ${ rol } no está registrado en la BD`);
-    }
-};
+const { Usuario, Item, GroupUser } = require('../models');
 
 const emailExiste = async( correo = '') => {
     const existeEmail = await Usuario.findOne({ correo });
@@ -38,12 +31,11 @@ const existeItem = async ( id ) => {
 const existeGrupo = async ( id ) => {
     const existeGrupo = await GroupUser.findById(id);
     if ( !existeGrupo ){
-        throw new Error(`El Item ID: ${ id } no existe`);
+        throw new Error(`El Grupo con ID: ${ id } no existe`);
     }
 }
 
 module.exports = {
-    esRoleValido,
     emailExiste,
     existeUsuarioPorId,
     existeItem,

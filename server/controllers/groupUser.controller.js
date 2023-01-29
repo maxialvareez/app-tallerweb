@@ -3,8 +3,7 @@ const { Usuario, GroupUser } = require('../models');
 
 const userGroupGet = async (req, res = response) =>{
 
-    const { pertenece_a } = req.usuario;
-    const query = { _id: pertenece_a }
+    const query = { integrantes: { $in: [req.usuario._id] } }
 
     const grupos = await GroupUser.find(query)
             .populate('creado_por', 'nombre')
@@ -18,11 +17,12 @@ const userGroupGet = async (req, res = response) =>{
 const userGroupByIdGet = async (req, res = response) =>{
 
     const { id } = req.params;
-    const group = await GroupUser.findById(id).populate('integrantes', ['nombre', 'correo', 'estado']).populate('creado_por');
-    const user = await Usuario.findById(req.usuario._id);
+    const group = await GroupUser.findById(id);
 
-    if(user.pertenece_a.includes(id)){
-        return res.json(group);
+    if(group.integrantes.includes(req.usuario._id)){
+        const response = await group.populate('integrantes', ['nombre', 'correo', 'estado']);
+        await response.populate('creado_por');
+        return res.json(response);
     }
 
     return res.status(401).json({
@@ -31,7 +31,7 @@ const userGroupByIdGet = async (req, res = response) =>{
 
 }
 
-const userGroupPost = async (req, res = response) => {
+const registrarGrupo = async (req, res = response) => {
 
     const { nombre, descripcion } = req.body;
 
@@ -45,8 +45,6 @@ const userGroupPost = async (req, res = response) => {
     const grupo = new GroupUser(data);
     await grupo.save();
 
-    await Usuario.findByIdAndUpdate(req.usuario._id, {$push: { pertenece_a: grupo}});
-
     res.status(201).json({
         msg: 'Grupo creado'
     })
@@ -54,10 +52,10 @@ const userGroupPost = async (req, res = response) => {
 
 const addUserGroup = async (req, res = response) => {
 
-    const correo = req.params.correo;
+    const correo = req.body.correo;
     const user = await Usuario.findOne({correo});
     const idUserGrupo = req.usuario._id.valueOf();
-    const groupUser = await GroupUser.findById(req.body.grupo);
+    const groupUser = await GroupUser.findById(req.params.id);
     
     const { integrantes } = groupUser;
 
@@ -78,14 +76,12 @@ const addUserGroup = async (req, res = response) => {
             integrantes: user
         }});
     
-    await Usuario.findByIdAndUpdate(user, {$push: { pertenece_a: grupo}});
-    
     return res.json({
         grupo
     })
 };
 
-const updateUserGroup = async (req, res = response) => {
+const editarGrupo = async (req, res = response) => {
     
     const { id } = req.params;
     const group = await GroupUser.findById(id);
@@ -102,16 +98,17 @@ const updateUserGroup = async (req, res = response) => {
     res.json(grupo)
 };
 
-const deleteUserGroup = async (req, res) => {
+const deleteGroup = async (req, res) => {
     
     const { id } = req.params;
     const grupoBorrado = await GroupUser.findById(id);
 
     if(grupoBorrado.creado_por.valueOf() == req.usuario._id.valueOf()){
         await GroupUser.findByIdAndUpdate(id, {estado: false}, {new: true});
-        await Usuario.findByIdAndUpdate(req.usuario._id, {$pull: { pertenece_a: id}});
         
-        res.json("Grupo eliminado");
+        res.json({
+            msg: "Grupo eliminado"
+        });
     } else {
         res.status(401).json("No tenes permisos");
     }
@@ -120,18 +117,20 @@ const deleteUserGroup = async (req, res) => {
 
 const deleteUserFromGroup = async (req, res) => {
     
-    const { id, grupoId } = req.params;
-    const userBorrado = await Usuario.findById(id);
-    const group = await GroupUser.findById(grupoId);
+    const { id } = req.params;
+    const correo = req.body.correo;
+    const userBorrado = await Usuario.findOne({correo});
+    const group = await GroupUser.findById(req.params.id);
 
     if(group.creado_por.valueOf() == req.usuario._id.valueOf()){
-        await GroupUser.findByIdAndUpdate(group, {$pull: { integrantes: id}});
-        await Usuario.findByIdAndUpdate(userBorrado, {$pull: { pertenece_a: grupoId}});
+        await GroupUser.findByIdAndUpdate(group, {$pull: { integrantes: userBorrado._id}});
         
-        res.json("Integrante eliminado del grupo");
+        res.json({
+            msg: "Integrante eliminado del grupo"
+        });
     } else {
         res.status(401).json("No tenes permisos");
     }
 };
 
-module.exports = { userGroupByIdGet, userGroupGet, userGroupPost, updateUserGroup, deleteUserGroup, addUserGroup, deleteUserFromGroup};
+module.exports = { userGroupByIdGet, userGroupGet, registrarGrupo, editarGrupo, deleteGroup, addUserGroup, deleteUserFromGroup};
