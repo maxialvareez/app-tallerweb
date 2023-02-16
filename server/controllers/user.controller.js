@@ -26,7 +26,7 @@ const registrarUsuario = async (req, res = response) => {
     const usuario = new Usuario({ nombre, correo, password });
 
     // Encriptar la contraseña
-    const salt = bcryptjs.genSaltSync();
+    const salt = bcryptjs.genSaltSync(4);
     usuario.password = bcryptjs.hashSync(password, salt);
 
     // Guardar en BD
