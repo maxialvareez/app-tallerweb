@@ -46,7 +46,8 @@ const registrarGrupo = async (req, res = response) => {
     await grupo.save();
 
     res.status(201).json({
-        msg: 'Grupo creado'
+        msg: 'Grupo creado',
+        grupo
     })
 };
 
