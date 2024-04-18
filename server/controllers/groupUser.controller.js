@@ -1,6 +1,32 @@
 const { response, request, json } = require('express');
 const { Usuario, GroupUser } = require('../models');
 
+const registrarGrupo = async (req, res = response) => {
+
+    const { nombre, descripcion } = req.body;
+
+    if(nombre == null || descripcion == null) {
+        return res.status(401).json({
+            msg: "Falta el nombre o la descripcion."
+        });
+    }
+
+    const data = {
+        nombre,
+        descripcion,
+        creado_por: req.usuario._id,
+        integrantes: req.usuario._id
+    }
+
+    const grupo = new GroupUser(data);
+    await grupo.save();
+
+    res.status(201).json({
+        msg: 'Grupo creado',
+        grupo
+    })
+};
+
 const userGroupGet = async (req, res = response) =>{
 
     const query = { integrantes: { $in: [req.usuario._id] } }
@@ -30,26 +56,6 @@ const userGroupByIdGet = async (req, res = response) =>{
     });
 
 }
-
-const registrarGrupo = async (req, res = response) => {
-
-    const { nombre, descripcion } = req.body;
-
-    const data = {
-        nombre,
-        descripcion,
-        creado_por: req.usuario._id,
-        integrantes: req.usuario._id
-    }
-
-    const grupo = new GroupUser(data);
-    await grupo.save();
-
-    res.status(201).json({
-        msg: 'Grupo creado',
-        grupo
-    })
-};
 
 const addUserGroup = async (req, res = response) => {
 

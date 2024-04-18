@@ -3,7 +3,7 @@ const bcryptjs = require('bcryptjs');
 const Usuario = require('../models/usuario');
 const { generarJWT } = require("../helpers/generar-jwt");
 
-
+// Login - se usa
 const login = async (req, res = response) => {
 
     const { correo, password } = req.body;
@@ -16,7 +16,7 @@ const login = async (req, res = response) => {
         if ( !usuario ){
             return res.status(400).json({
                 ok: false,
-                msg: 'Usuario / Passoword no son correctos - Correo equivocado'
+                msg: 'Usuario / Password no son correctos - Correo equivocado'
             });
         };
 

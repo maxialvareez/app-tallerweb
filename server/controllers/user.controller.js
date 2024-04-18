@@ -3,6 +3,38 @@ const Usuario = require('../models/usuario');
 const bcryptjs = require('bcryptjs');
 const { GroupUser } = require('../models');
 
+// Registrar usuario - se usa.
+const registrarUsuario = async (req, res = response) => {
+
+    const { nombre, correo, password } = req.body;
+    const usuario = new Usuario({ nombre, correo, password });
+
+    // Verificar si el email existe
+    const validar = await Usuario.findOne({ correo });
+    
+    if ( validar ){
+        return res.status(400).json({
+            ok: false,
+            msg: 'El correo ya se encuentra en uso.'
+        });
+    };
+
+    // Encriptar la contraseña
+    const salt = bcryptjs.genSaltSync(4);
+    usuario.password = bcryptjs.hashSync(password, salt);
+
+    // Guardar en BD
+    await usuario.save();
+    // Devuelve la entidad, en Java devuelve un DTO.
+
+    res.status(201).json({
+        ok: true,
+        msg: 'Usuario creado',
+        usuario
+    })
+};
+
+// No se usa
 const gruposUsuarioGet = async (req, res = response) => {
 
     const idUser = req.usuario._id.valueOf();
@@ -20,25 +52,7 @@ const gruposUsuarioGet = async (req, res = response) => {
     });
 };
 
-const registrarUsuario = async (req, res = response) => {
-
-    const { nombre, correo, password } = req.body;
-    const usuario = new Usuario({ nombre, correo, password });
-
-    // Encriptar la contraseña
-    const salt = bcryptjs.genSaltSync(4);
-    usuario.password = bcryptjs.hashSync(password, salt);
-
-    // Guardar en BD
-    await usuario.save();
-
-    res.status(201).json({
-        ok: true,
-        msg: 'Usuario creado',
-        usuario
-    })
-};
-
+// No se usa
 const editUsuario = async (req, res = response) => {
     
     const { password, nombre, ...resto} = req.body;
@@ -64,6 +78,7 @@ const editUsuario = async (req, res = response) => {
     
 };
 
+// No se usa
 const usuariosDelete = async (req, res) => {
     
     const { id } = req.params;
