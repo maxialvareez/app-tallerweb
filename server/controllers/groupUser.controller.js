@@ -1,5 +1,6 @@
 const { response, request, json } = require('express');
 const { Usuario, GroupUser } = require('../models');
+const GroupDTO = require('../dto/GroupDTO');
 
 const registrarGrupo = async (req, res = response) => {
 
@@ -14,16 +15,19 @@ const registrarGrupo = async (req, res = response) => {
     const data = {
         nombre,
         descripcion,
-        creado_por: req.usuario._id,
-        integrantes: req.usuario._id
+        creado_por: req.usuario,
+        integrantes: req.usuario
     }
 
     const grupo = new GroupUser(data);
     await grupo.save();
 
+    // Devuelve DTO
+    const body = new GroupDTO(grupo._id,grupo.nombre, grupo.descripcion, data.creado_por, data.integrantes)
+
     res.status(201).json({
         msg: 'Grupo creado',
-        grupo
+        body
     })
 };
 

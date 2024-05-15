@@ -2,6 +2,7 @@ const { response, request } = require('express');
 const Usuario = require('../models/usuario');
 const bcryptjs = require('bcryptjs');
 const { GroupUser } = require('../models');
+const LoginResponseDTO = require('../dto/LoginResponseDTO');
 
 // Registrar usuario - se usa.
 const registrarUsuario = async (req, res = response) => {
@@ -25,12 +26,14 @@ const registrarUsuario = async (req, res = response) => {
 
     // Guardar en BD
     await usuario.save();
-    // Devuelve la entidad, en Java devuelve un DTO.
+
+    // Devuelve DTO
+    const body = LoginResponseDTO.constructorSinToken(usuario._id,usuario.nombre,usuario.correo);
 
     res.status(201).json({
         ok: true,
         msg: 'Usuario creado',
-        usuario
+        body
     })
 };
 

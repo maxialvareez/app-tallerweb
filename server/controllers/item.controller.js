@@ -1,5 +1,6 @@
 const { response } = require("express");
 const { Item, GroupUser } = require('../models');
+const ItemDTO = require('../dto/ItemDTO');
 
 
 const addItem = async (req, res = response) =>{
@@ -18,7 +19,14 @@ const addItem = async (req, res = response) =>{
     await item.save();
     await GroupUser.findByIdAndUpdate(req.params.grupo, {$push: { items: item}});
 
-    res.status(201).json(item);
+    // Devuelve DTO
+    const body = new ItemDTO(item._id, item.nombre, item.descripcion, item.costo, item.pago, req.usuario)
+
+    res.status(201).json({
+        ok: true,
+        message: "",
+        body
+    });
     
 }
 
@@ -61,7 +69,11 @@ const deleteItem = async (req, res = response) =>{
     const itemBorrado = await Item.findByIdAndUpdate(id, {estado: false}, {new: true});
     const grupoActualizado = await GroupUser.findByIdAndUpdate(idGrupo, {$pull: { items: itemBorrado._id}});
     
-    res.json(itemBorrado);
+    res.json({
+        ok: true,
+        message: "Item eliminado correctamente",
+        body: null
+    });
 
 }
 
