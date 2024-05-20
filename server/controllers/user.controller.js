@@ -28,7 +28,7 @@ const registrarUsuario = async (req, res = response) => {
     await usuario.save();
 
     // Devuelve DTO
-    const body = LoginResponseDTO.constructorSinToken(usuario._id,usuario.nombre,usuario.correo);
+    const body = LoginResponseDTO.constructorSinToken(usuario._id,usuario.correo,usuario.nombre);
 
     res.status(201).json({
         ok: true,
